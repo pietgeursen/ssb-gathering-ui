@@ -3,11 +3,12 @@ import Document from 'vdux/document'
 import element from 'vdux/element'
 import enroute from 'enroute'
 import App from './app'
+import Create from './create'
 import Nav from './nav'
 
 const router = enroute({
   '/': () => App,
-  '/#/create': () => App
+  '/#/create': () => Create
 })
 
 function render ({local, state, props}) {
@@ -17,7 +18,9 @@ function render ({local, state, props}) {
       <Document onClick={handleLinkClicks(local(setUrl))}>
         <div>
           <Nav />
-          <Component state={props.state} />
+          <div class='container'>
+            <Component state={props.state} />
+          </div>
         </div>
       </Document>
     </Window>
