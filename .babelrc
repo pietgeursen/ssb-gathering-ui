@@ -1,4 +1,4 @@
 { 
   "presets": ["es2015"],
-  "plugins": [["transform-react-jsx", {"pragma": "element"}]]
+  "plugins": [["transform-react-jsx", {"pragma": "element"}], "transform-object-rest-spread"]
 }

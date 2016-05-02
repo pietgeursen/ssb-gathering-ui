@@ -7,12 +7,11 @@ import App from './components/app'
 
 function reducer(state, action) {
   if(action.type === "RSVP"){
-   const newState = Object.assign({}, state) 
+   const newState = {...state}
    const newEvent = newState.events.find(function(event) {
     return event.id == action.id 
    })
    newEvent.status = action.status
-   console.log('objects equal', newState == state)
    return newState  
   }
   return state
