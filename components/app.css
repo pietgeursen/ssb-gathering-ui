@@ -2,31 +2,6 @@ h1 {
   text-align: center;
   color: red;
 }
-.navbar-list {
-  list-style: none;
-  margin-bottom: 0;
-}
-.navbar-item {
-  margin-bottom: 0;
-  position: relative;
-}
-.navbar-link {
-  text-decoration: none;
-  line-height: 6.5rem;
-  margin-right: 35px;
-}
-.navbar-spacer{
-  border-bottom: 1px solid #eee;
-}
-.navbar{
-  background: #EEE;
-  border-bottom: 1px solid #eee;
-  z-index: 99;
-  display: block;
-  width: 100%;
-  top: 0;
-  left: 0;
-}
 .create-button {
   float: right;
 }
