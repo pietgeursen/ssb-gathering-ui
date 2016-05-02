@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/pietgeursen/",
   "dependencies": {
+    "enroute": "^1.0.1",
     "moment": "^2.13.0"
   },
   "devDependencies": {

@@ -12,7 +12,7 @@ const App = {
           <div class='container'> 
             <ul class='navbar-list'>
               <li class='navbar-item'>
-                <a class='navbar-link' href='/#/'>Events</a>
+                <a class='navbar-link' href='#'>Events</a>
               </li>
             </ul>
           </div>
@@ -24,7 +24,7 @@ const App = {
               <option value='hosting'>Hosting</option>
               <option value='invites'>Invites</option>
             </select>
-            <a class='button button-primary create-button' href='/#/create'>Create</a> 
+            <a class='button button-primary create-button' href='#/create'>Create</a> 
           </div>
           <div>
             {props.state.events.map(function(event) {
