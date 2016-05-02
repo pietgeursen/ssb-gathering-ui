@@ -28,7 +28,7 @@ const App = {
           </div>
           <div>
             {props.state.events.map(function(event) {
-              return <Event event={event} />
+              return <Event event={event} eventId={event.status} />
             })}
           </div>
         </div>

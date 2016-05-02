@@ -5,7 +5,16 @@ const prefix = sf('./event.css')
 
 import ActiveButton from './activeButton'
 
+function rsvp(status, id) {
+ return {
+   type: 'RSVP',
+   status,
+   id
+ } 
+}
+
 const Event = {
+
   render({props}){
     const event = props.event
     const time = moment(event.time).calendar()
@@ -24,13 +33,13 @@ const Event = {
         </div>  
         <div class='respond-buttons row'>  
           <div class='four columns'>
-            <ActiveButton text='GOING' active={event.status == 1} /> 
+            <ActiveButton click={() => rsvp(1, event.id)} text='GOING' active={event.status == 1} /> 
           </div>
           <div class='four columns'>
-            <ActiveButton text='MAYBE' active={event.status == 0} /> 
+            <ActiveButton click={() => rsvp(0, event.id)} text='MAYBE' active={event.status == 0} /> 
           </div>
           <div class='four columns'>
-            <ActiveButton text="CAN'T GO" active={event.status == -1} /> 
+            <ActiveButton click={() => rsvp(-1, event.id)} text="CAN'T GO" active={event.status == -1} /> 
           </div>
         </div>  
       </div>  

@@ -4,7 +4,7 @@ const sf = require('sheetify')
 const ActiveButton = {
   render(state){
     return (
-      <button class={state.props.active ? 'button-primary' : 'button'}>{state.props.text}</button>  
+      <button onClick={state.props.click} class={state.props.active ? 'button-primary' : 'button'}>{state.props.text}</button>  
     ) 
   }
 }
