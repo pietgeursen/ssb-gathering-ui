@@ -1,6 +1,7 @@
 import element from 'vdux/element'
 const sf = require('sheetify')
 const prefix = sf('./app.css')
+import Event from './event'
 
 const App = {
 
@@ -26,6 +27,7 @@ const App = {
             <a class='button button-primary create-button' href='/#/create'>Create</a> 
           </div>
           <div class='section'>
+            <Event />
           </div>
         </div>
       </div>
