@@ -6,6 +6,9 @@ import App from './components/app'
 
 
 function reducer(state, action) {
+  if(action.type === "RSVP"){
+   return Object.assign({}, state, {status: action.status} ) 
+  }
   return state
 }
 
@@ -25,7 +28,8 @@ const initialState = {
     description: "Art for hacking's sake",
     location: "Enspiral space",
     time: new Date(),
-    createdBy: "Mikey"
+    createdBy: "Mikey",
+    status: 1
   }
   ]    
 }
@@ -33,9 +37,9 @@ const initialState = {
 const {subscribe, render} = vdux({reducer, initialState})
 
 
-  ready(() => {
-    subscribe(state => {
-      render(<App state={state} />)
-    })
+ready(() => {
+  subscribe(state => {
+    render(<App state={state} />)
   })
+})
 

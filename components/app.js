@@ -26,7 +26,7 @@ const App = {
             </select>
             <a class='button button-primary create-button' href='/#/create'>Create</a> 
           </div>
-          <div class='section'>
+          <div>
             {props.state.events.map(function(event) {
               return <Event event={event} />
             })}
