@@ -27,7 +27,9 @@ const App = {
             <a class='button button-primary create-button' href='/#/create'>Create</a> 
           </div>
           <div class='section'>
-            <Event />
+            {props.state.events.map(function(event) {
+              return <Event event={event} />
+            })}
           </div>
         </div>
       </div>
