@@ -17,7 +17,7 @@ const Event = {
 
   render({props}){
     const event = props.event
-    const time = moment(event.time).calendar()
+    const time = moment(event.dateTime).calendar()
     return (
       <div class={[prefix, 'section']}>  
         <div class='details row'>  

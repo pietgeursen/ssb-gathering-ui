@@ -14,6 +14,11 @@ function reducer(state, action) {
    newEvent.status = action.status
    return newState  
   }
+  if(action.type === "DID_CREATE_EVENT"){
+    const newState = {...state}
+    newState.events.push(action.event)
+    return newState
+  }
   return state
 }
 
@@ -25,7 +30,7 @@ const initialState = {
     title: "Lebowskifest",
     description: "Abiding, bowling, the occasional acid flashback.",
     location: "Bowling Alley",
-    time: new Date(),
+    dateTime: new Date(),
     createdBy: "Piet"
   },
   {
@@ -34,7 +39,7 @@ const initialState = {
     title: "Art hack",
     description: "Art for hacking's sake",
     location: "Enspiral space",
-    time: new Date(),
+    dateTime: new Date(),
     createdBy: "Mikey",
     status: 0
   }

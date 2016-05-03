@@ -3,8 +3,25 @@ import Form from 'vdux-form'
 const sf = require('sheetify')
 const prefix = sf('./create.css')
 
+function postEvent(title, location, description, date, time, mentions, imageUrl) {
+ const dateTime = new Date(date + "T" + time)
+ return {
+   dateTime,
+   title,
+   location,
+   description,
+   imageUrl,
+   mentions
+ } 
+}
+
+
 function onSubmit(form) {
-  console.log('got form sub:', form)
+  const event = postEvent(form.name, form.location, form.desctiption, form.date, form.time)
+  return {
+    type: "DID_CREATE_EVENT",
+    event
+  }  
 }
 
 
