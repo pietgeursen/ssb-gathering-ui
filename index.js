@@ -3,7 +3,7 @@ import element from 'vdux/element'
 import ready from 'domready'
 
 import App from './components/app'
-
+import Router from './components/router'
 
 function reducer(state, action) {
   if(action.type === "RSVP"){
@@ -46,7 +46,7 @@ const {subscribe, render} = vdux({reducer, initialState})
 
 ready(() => {
   subscribe(state => {
-    render(<App state={state} />)
+    render(<Router state={state} />)
   })
 })
 
