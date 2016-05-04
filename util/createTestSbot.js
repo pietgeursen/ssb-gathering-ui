@@ -1,11 +1,10 @@
-var test = require('tape')
-var pull = require('pull-stream')
 var ssbKeys = require('ssb-keys')
 
 var createSbot = require('scuttlebot')
+  .use(require('../event-sbot-plugin'))
 
-function createTestBot(name, port) {
- return createSbot({keys: ssbKeys.generate(), temp: name, port: port})
+function createTestBot(name) {
+ return createSbot({keys: ssbKeys.generate(), temp: name})
 }
 
 module.exports = createTestBot 
