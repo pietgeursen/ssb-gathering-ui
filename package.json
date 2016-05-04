@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "budo . -d --serve bundle.js --live",
+    "start-server": "node server.js",
     "build": "browserify . -o bundle.js -g uglifyify",
     "test": "browserify test.js | node | tap-spec",
     "dist": "mkdir -p dist && bash -c 'cp *.{js,html,css} dist'",
@@ -29,7 +30,9 @@
   "homepage": "https://github.com/pietgeursen/",
   "dependencies": {
     "enroute": "^1.0.1",
-    "moment": "^2.13.0"
+    "moment": "^2.13.0",
+    "muxrpc": "^6.3.3",
+    "scuttlebot": "^8.1.0"
   },
   "devDependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.6.5",
@@ -42,6 +45,7 @@
     "gh-pages": "^0.11.0",
     "redux": "^3.5.2",
     "sheetify": "^5.0.0",
+    "ssb-keys": "^5.0.1",
     "tap-spec": "^4.1.1",
     "tape": "^4.5.1",
     "uglifyify": "^3.0.1",
