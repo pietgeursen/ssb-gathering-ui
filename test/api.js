@@ -2,11 +2,7 @@ var Muxrpc = require('muxrpc')
 var pull = require('pull-stream')
 var test = require('tape');
 var TestBot = require('../util/createTestSbot')
-
-var api = {
-  findEvents: 'source',
-  createEvent: 'async'
-}
+var api = require('../api');
 
 var testBot = TestBot('teste')
 

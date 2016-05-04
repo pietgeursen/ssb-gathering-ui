@@ -6,6 +6,7 @@ const prefix = sf('./create.css')
 function postEvent(title, location, description, date, time, mentions, imageUrl) {
  const dateTime = new Date(date + "T" + time)
  return {
+   type: 'event',
    dateTime,
    title,
    location,
@@ -19,7 +20,7 @@ function postEvent(title, location, description, date, time, mentions, imageUrl)
 function onSubmit(form) {
   const event = postEvent(form.name, form.location, form.desctiption, form.date, form.time)
   return {
-    type: "DID_CREATE_EVENT",
+    type: "DID_SUBMIT_EVENT",
     event
   }  
 }
