@@ -1,8 +1,11 @@
-var TestSbot = require('./util/createTestSbot')
+var createSbot = require('scuttlebot')
+  .use(require('./event-sbot-plugin'))
+
+var ssbKeys = require('ssb-keys')
+var sbot = createSbot({keys: ssbKeys.generate(), temp: 'test'})
+
 var WSServer = require('./ws-server');
 var ws = require('pull-ws-server')
-
-var sbot = TestSbot('teste')
 
 var wsServerfn = WSServer(sbot)
 

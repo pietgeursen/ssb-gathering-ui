@@ -7,12 +7,8 @@ module.exports = function (sbot) {
   return function (stream) {
     // create rpc object
     var rpc = muxrpc({}, api, serialize)({
-      findEvents: function(){
-        return sbot.messagesByType({type: 'event', live:true})
-      },
-      createEvent: function(event, cb) {
-        sbot.publish(event, cb)
-      }
+      findEvents: sbot.events.find,
+      createEvent: sbot.events.create 
     })
 
     // start the stream
