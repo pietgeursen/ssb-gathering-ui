@@ -1,6 +1,7 @@
 import vdux from 'vdux/dom'
 import element from 'vdux/element'
 import ready from 'domready'
+import moment from 'moment'
 
 import SSBClient from './ws-client'
 import pull from 'pull-stream'
@@ -16,7 +17,7 @@ var sbotSeedEvents = [
     title: "Lebowskifest",
     description: "Abiding, bowling, the occasional acid flashback.",
     location: "Bowling Alley",
-    dateTime: new Date(),
+    dateTime: moment().add(2, 'days').toDate(),
     createdBy: "Piet"
   },
   {
@@ -25,7 +26,7 @@ var sbotSeedEvents = [
     title: "Art hack",
     description: "Art for hacking's sake",
     location: "Enspiral space",
-    dateTime: new Date(),
+    dateTime: moment().add(1, 'days').toDate(),
     createdBy: "Mikey",
     status: 0
   }
@@ -66,7 +67,7 @@ const initialState = {
 
 const {subscribe, render, dispatch} = vdux({reducer, initialState})
 
-pull(client.findEvents(), pull.drain(function(event) {
+pull(client.findFutureEvents(), pull.drain(function(event) {
  dispatch(
    {
      type: "DID_CREATE_EVENT",

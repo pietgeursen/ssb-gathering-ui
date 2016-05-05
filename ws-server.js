@@ -8,6 +8,7 @@ module.exports = function (sbot) {
     // create rpc object
     var rpc = muxrpc({}, api, serialize)({
       findEvents: sbot.events.find,
+      findFutureEvents: sbot.events.future,
       createEvent: sbot.events.create 
     })
 

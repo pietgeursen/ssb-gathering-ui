@@ -12,20 +12,23 @@ module.exports = {
   },
   permissions: {},
   init: function(sbot, config){
+    function find(){
+      return sbot.messagesByType({type: 'event', live:true})
+    }
+    function future() {
+      return pull(find(), pull.filter(function(event) {
+        return moment(event.value.content.dateTime).isAfter(moment())
+      }))
+    }
+    function create(event, cb) {
+      sbot.publish(event, cb)
+    }
     return {
-      find: function(){
-        return sbot.messagesByType({type: 'event', live:true})
-      },
-      findFuture: function(){
-        return pull(this.find(), pull.filter(function(event) {
-          return moment(event.value.content.dateTime).isAfter(moment())
-        }))
-      },
-      create: function(event, cb) {
-        sbot.publish(event, cb)
+      find:find,
+      future: future,
+      create: create
       }
     }  
-  }
-
 }
+
 
