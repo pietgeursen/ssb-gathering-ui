@@ -17,7 +17,7 @@ test('create', function(t) {
 })
 
 test('find', function(t) {
-  var testBot = require('../util/createTestSbot')('teste')
+  var testBot = require('../util/createTestSbot')('teste1')
 
   testBot.events.create(validEvent,function(err, data) {
   })
@@ -31,7 +31,7 @@ test('find', function(t) {
 })
 
 test('findFuture', function(t) {
-  var testBot = require('../util/createTestSbot')('teste')
+  var testBot = require('../util/createTestSbot')('teste2')
   var futureDateTime = moment().add(1, 'days').toDate()
   var pastDateTime  = moment().subtract(1, 'days').toDate()
 
