@@ -5,9 +5,7 @@ var validEvent = require('../util/validEvent')
 validEvent.type = 'event'
 
 var createSbot = require('scuttlebot')
-  .use(require('scuttlebot/plugins/gossip'))
   .use(require('scuttlebot/plugins/friends'))
-  .use(require('scuttlebot/plugins/replicate'))
   .use(require('../event-sbot-plugin'))
 
 function follow (id) {
