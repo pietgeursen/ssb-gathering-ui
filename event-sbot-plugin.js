@@ -13,16 +13,17 @@ module.exports = {
   },
   permissions: {},
   init: function(sbot, config){
-    function find(){
-      return sbot.messagesByType({type: 'event', live: true})
+    function find(opts){
+      var _opts = Object.assign({type: 'event', live: true}, opts)
+      return sbot.messagesByType(_opts)
     }
-    function future() {
-      return pull(find(), pull.filter(function(event) {
+    function future(opts) {
+      return pull(find(opts), pull.filter(function(event) {
         return moment(event.value.content.dateTime).isAfter(moment())
       }))
     }
-    function hosting(){
-      return pull(find(), pull.filter(function(event) {
+    function hosting(opts){
+      return pull(find(opts), pull.filter(function(event) {
         return event.value.author === sbot.id 
       })) 
     }
