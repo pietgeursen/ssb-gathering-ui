@@ -47,17 +47,3 @@ test('find gets all messages by all authors, hosting gets only messages by me', 
 })
 
 
-test.skip('[WIP] hosting', function(t) {
-  var testBot = require('../util/createTestSbot')('teste')
-
-  testBot.events.create(validEvent,function(err, data) {
-  })
-
-  pull(testBot.events.hosting(), pull.drain(function(record) {
-   t.equal(record.value.content.type, 'event', 'data has type event') 
-   t.end()
-   testBot.close()
-   return false
-  }))   
-})
-
