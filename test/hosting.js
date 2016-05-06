@@ -7,6 +7,7 @@ validEvent.type = 'event'
 var createSbot = require('scuttlebot')
   .use(require('scuttlebot/plugins/gossip'))
   .use(require('scuttlebot/plugins/friends'))
+  .use(require('scuttlebot/plugins/replicate'))
   .use(require('../event-sbot-plugin'))
 
 function follow (id) {
@@ -19,6 +20,17 @@ test('find gets all messages by all authors', function(t) {
 
   var piet = createSbot({temp:'piet', keys: ssbKeys.generate()})
   var katie = createSbot({temp:'katie', keys: ssbKeys.generate()})
+
+  katie.gossip.add(piet.getAddress())
+  piet.gossip.add(katie.getAddress())
+
+  piet.publish(follow(katie.id), function(err, data) {
+  })
+  katie.publish(follow(piet.id), function(err, data) {
+  })
+
+  piet.events.create(validEvent,function(err, data) {})
+  katie.events.create(validEvent,function(err, data) {})
 
   pull(piet.friends.createFriendStream({live: true}), pull.take(2), pull.collect(function(err, friends) {
     t.equal(friends.find(function(friend) {
@@ -35,18 +47,7 @@ test('find gets all messages by all authors', function(t) {
     piet.close()
     katie.close()
   }))
-
-  katie.gossip.add(piet.getAddress())
-  piet.gossip.add(katie.getAddress())
-
-  piet.publish(follow(katie.id), function(err, data) {
-  })
-  katie.publish(follow(piet.id), function(err, data) {
-  })
-
-  piet.events.create(validEvent,function(err, data) {})
-  katie.events.create(validEvent,function(err, data) {})
-
+  
 })
 
 
