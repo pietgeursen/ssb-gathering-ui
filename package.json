@@ -34,7 +34,8 @@
     "muxrpc": "^6.3.3",
     "pull-serializer": "^0.3.2",
     "pull-ws-server": "^1.8.0",
-    "scuttlebot": "^8.1.0"
+    "scuttlebot": "^8.1.0",
+    "tcomb": "^3.0.0"
   },
   "devDependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.6.5",
