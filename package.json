@@ -35,6 +35,7 @@
     "pull-serializer": "^0.3.2",
     "pull-ws-server": "^1.8.0",
     "scuttlebot": "^8.1.0",
+    "ssb-msg-schemas": "^6.2.1",
     "tcomb": "^3.0.0"
   },
   "devDependencies": {
