@@ -11,15 +11,12 @@ var createSbot = require('scuttlebot')
 test('can get all comments on an event', function(t) {
   var pietKey = ssbKeys.generate()
   var sbot = createSbot({temp:'piety', keys: pietKey})
-  var piet = sbot.createFeed(pietKey)
 
-  piet.add(validEvent,function(err, data) {
-    var id = data.key 
+  sbot.publish(validEvent,function(err, event) {
+    var id = event.key 
      
-    sbot.publish(schema.post({text:'wee', mentions: id}), function(err, data) {
-      console.log(err, data)
-      pull(sbot.links({source:id}), pull.collect(function(err, data) {
-        console.log(err, data);
+    sbot.publish(schema.post('wee',null, null, id), function(err, comment) {
+      pull(sbot.links({dest: id}), pull.collect(function(err, data) {
         t.equal(data.length, 1, 'one link references event')
         sbot.close()
         t.end()
