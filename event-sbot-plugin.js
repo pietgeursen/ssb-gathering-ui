@@ -36,9 +36,14 @@ module.exports = {
     }
     function commentsOnEvent(eventId, opts){
       var _opts = Object.assign({dest: eventId, live: true}, opts)
-      return pull(sbot.links(_opts), pull.asyncMap(function(data, cb) {
-       sbot.get(data.key, cb)
-      }))
+      return pull(
+        sbot.links(_opts), 
+        pull.asyncMap(function(data, cb) {
+          sbot.get(data.key, cb)
+        }),
+        pull.filter(function(data) {
+         return data.content.type == 'post' 
+        }))
     }
     return {
       find:find,
@@ -49,5 +54,4 @@ module.exports = {
       }
     }  
 }
-
 
