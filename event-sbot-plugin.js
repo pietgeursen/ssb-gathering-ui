@@ -34,15 +34,26 @@ module.exports = {
       //var e = Event(event)
       sbot.publish(event, cb)
     }
-    function commentsOnEvent(eventId, opts){
+    function linksToEvent(eventId, opts) {
       var _opts = Object.assign({dest: eventId, live: true}, opts)
       return pull(
         sbot.links(_opts), 
         pull.asyncMap(function(data, cb) {
           sbot.get(data.key, cb)
-        }),
+        }))
+    }
+    function commentsOnEvent(eventId, opts){
+        return pull(
+          linksToEvent(eventId, opts), 
+          pull.filter(function(data) {
+            return data.content.type == 'post' 
+        }))
+    }
+    function rsvpsOnEvent(eventId, opts){
+      return pull(
+        linksToEvent(eventId, opts), 
         pull.filter(function(data) {
-         return data.content.type == 'post' 
+          return data.content.type == 'vote' 
         }))
     }
     return {
@@ -50,7 +61,8 @@ module.exports = {
       future: future,
       create: create,
       hosting: hosting,
-      commentsOnEvent: commentsOnEvent
+      commentsOnEvent: commentsOnEvent,
+      rsvpsOnEvent: rsvpsOnEvent
       }
     }  
 }
