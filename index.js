@@ -49,6 +49,9 @@ function reducer(state, action) {
   }
   if(action.type === "DID_CREATE_EVENT"){
     const newState = {...state}
+    if(newState.events.findIndex(function(event) {
+      return event.id == action.event.id 
+    }) >= 0) return newState
     newState.events.push(action.event)
     return newState
   }
@@ -67,11 +70,18 @@ const initialState = {
 
 const {subscribe, render, dispatch} = vdux({reducer, initialState})
 
-pull(client.findFutureEvents(), pull.drain(function(event) {
+pull(client.findFutureEvents(),pull.map(function(event) {
+  return {
+    ...event.value.content,
+    author : event.value.author,
+    id : event.key
+  }
+}), pull.drain(function(event) {
+ console.log(event);
  dispatch(
    {
      type: "DID_CREATE_EVENT",
-     event: event.value.content
+     event: event
    }
    ) 
 }))
