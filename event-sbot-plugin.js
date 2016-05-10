@@ -8,11 +8,14 @@ module.exports = {
   version: '0.0.0',
   manifest: {
     find: 'source',
-    findFuture: 'source',
+    future: 'source',
+    hosting: 'source',
+    commentsOnEvent: 'source',
     create: 'async'
   },
   permissions: {},
   init: function(sbot, config){
+
     function find(opts){
       var _opts = Object.assign({type: 'event', live: true}, opts)
       return sbot.messagesByType(_opts)
@@ -31,11 +34,18 @@ module.exports = {
       //var e = Event(event)
       sbot.publish(event, cb)
     }
+    function commentsOnEvent(eventId, opts){
+      var _opts = Object.assign({dest: eventId, live: true}, opts)
+      return pull(sbot.links(_opts), pull.asyncMap(function(data, cb) {
+       sbot.get(data.key, cb)
+      }))
+    }
     return {
       find:find,
       future: future,
       create: create,
-      hosting: hosting
+      hosting: hosting,
+      commentsOnEvent: commentsOnEvent
       }
     }  
 }

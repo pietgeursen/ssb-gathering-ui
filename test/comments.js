@@ -16,17 +16,14 @@ test('can get all comments on an event', function(t) {
     var id = event.key 
      
     sbot.publish(schema.post('wee',null, null, id), function(err, comment) {
-      pull(sbot.links({dest: id}), pull.collect(function(err, data) {
+      pull(sbot.events.commentsOnEvent(id, {live: false}), pull.collect(function(err, data) {
         t.equal(data.length, 1, 'one link references event')
+        t.deepEqual(data[0], comment.value)
         sbot.close()
         t.end()
       }))
-      
     })
-  
   })
-
-  
 })
 
 
