@@ -1,5 +1,5 @@
 var createSbot = require('scuttlebot')
-  .use(require('./event-sbot-plugin'))
+  .use(require('../sbot-events/'))
 
 var ssbKeys = require('ssb-keys')
 var sbot = createSbot({keys: ssbKeys.generate(), temp: 'test-fun'})
