@@ -1,6 +1,4 @@
-import Window from 'vdux/window'
-import Document from 'vdux/document'
-import element from 'vdux/element'
+import {element} from 'deku'
 import enroute from 'enroute'
 import App from './app'
 import Create from './create'
@@ -11,19 +9,15 @@ const router = enroute({
   '/#/create': () => Create
 })
 
-function render ({local, state, props}) {
-  const Component = router(state.url)
+function render ({props}) {
+  const Component = router(props.url)
   return (
-    <Window onPopstate={local(setUrl)}>
-      <Document onClick={handleLinkClicks(local(setUrl))}>
         <div>
           <Nav />
           <div class='container'>
             <Component state={props.state} />
           </div>
         </div>
-      </Document>
-    </Window>
     )
 }
 

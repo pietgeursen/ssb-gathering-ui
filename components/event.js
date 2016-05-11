@@ -1,8 +1,8 @@
-import element from 'vdux/element'
+import {element} from 'deku'
 import moment from 'moment'
 const sf = require('sheetify')
 const prefix = sf('./event.css')
-
+import classNames from 'classnames'
 import ActiveButton from './activeButton'
 
 function rsvp(status, id) {
@@ -19,7 +19,7 @@ const Event = {
     const event = props.event
     const time = moment(event.dateTime).calendar()
     return (
-      <div class={[prefix, 'section']}>  
+      <div class={classNames([prefix, 'section'])}>  
         <div class='details row'>  
           <div class='pic four columns'>  
             <img src={event.imageUrl} />

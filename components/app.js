@@ -1,4 +1,4 @@
-import element from 'vdux/element'
+import {element} from 'deku'
 const sf = require('sheetify')
 const prefix = sf('./app.css')
 import Event from './event'

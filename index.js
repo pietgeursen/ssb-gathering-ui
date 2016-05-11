@@ -1,5 +1,6 @@
-import vdux from 'vdux/dom'
-import element from 'vdux/element'
+import {element, createApp} from 'deku'
+import {createStore} from 'redux'
+import { install, loop, Effects } from 'redux-loop'
 import ready from 'domready'
 import moment from 'moment'
 
@@ -34,11 +35,35 @@ var sbotSeedEvents = [
 
 for(event of sbotSeedEvents){
   client.createEvent(event,function(err, data) {
-    console.log(err, data);
   })
 }
 
-function reducer(state, action) {
+const submitNewStart = {
+  type: 'DID_SUBMIT_NEW_EVENT'
+}
+
+const submitNewEvent = function(event){
+ console.log('creating a new promise');
+ return new Promise(function(resolve, reject) {
+  client.createEvent(event, function(err, data){
+    console.log('we created an event and should dispatch an action');
+    if(err) reject({type: 'CREATE_FAILURE'})
+    else resolve({type:'DID_CREATE_EVENT', event: data})
+  })
+ })
+} 
+
+const initialState = {
+  events: []    
+}
+
+function reducer(state = initialState, action) {
+  console.log(state, action);
+
+  if(action.type === "DID_SUBMIT_NEW_EVENT"){
+    return loop(state, Effects.promise(submitNewEvent, action.event) ) 
+  }
+  
   if(action.type === "RSVP"){
    const newState = {...state}
    const newEvent = newState.events.find(function(event) {
@@ -55,20 +80,13 @@ function reducer(state, action) {
     newState.events.push(action.event)
     return newState
   }
-  if(action.type === "DID_SUBMIT_EVENT"){
-    client.createEvent(action.event,function(err, data) {
-      console.log(err, data);
-    })
-    return state
-  }
   return state
 }
 
-const initialState = {
-  events: []    
-}
 
-const {subscribe, render, dispatch} = vdux({reducer, initialState})
+//const {subscribe, render, dispatch} = vdux({reducer, initialState, middleware: [install()]})
+let store = createStore(reducer, install())
+let render = createApp(document.querySelector('#container'), store.dispatch)
 
 pull(client.findFutureEvents(),pull.map(function(event) {
   return {
@@ -77,18 +95,33 @@ pull(client.findFutureEvents(),pull.map(function(event) {
     id : event.key
   }
 }), pull.drain(function(event) {
- console.log(event);
- dispatch(
+ store.dispatch(
    {
      type: "DID_CREATE_EVENT",
      event: event
    }
    ) 
+  renderUI(store)
+
 }))
 
+function renderUI(store){
+  render(<Router url='/' state={store.getState()} />, store.getState())
+}
+
 ready(() => {
-  subscribe(state => {
-    render(<Router state={state} />)
-  })
+  renderUI(store)
 })
+
+const newEvent = {
+    type: 'event',
+    imageUrl: "http://25.media.tumblr.com/tumblr_llydmkQML11qaw9gjo1_400.jpg",
+    title: "dfkdjf hack",
+    description: "Art for hacking's sake",
+    location: "Enspiral space",
+    dateTime: moment().add(1, 'days').toDate(),
+    createdBy: "Mikey",
+    status: 0
+}
+
 

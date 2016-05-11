@@ -29,11 +29,14 @@
   },
   "homepage": "https://github.com/pietgeursen/",
   "dependencies": {
+    "classnames": "^2.2.5",
+    "deku": "^2.0.0-rc16",
     "enroute": "^1.0.1",
     "moment": "^2.13.0",
     "muxrpc": "^6.3.3",
     "pull-serializer": "^0.3.2",
     "pull-ws-server": "^1.8.0",
+    "redux": "^3.5.2",
     "scuttlebot": "^8.1.0",
     "ssb-msg-schemas": "^6.2.1",
     "tcomb": "^3.0.0"
@@ -48,13 +51,12 @@
     "domready": "^1.0.8",
     "gh-pages": "^0.11.0",
     "redux": "^3.5.2",
+    "redux-loop": "^2.1.1",
     "sheetify": "^5.0.0",
     "ssb-keys": "^5.0.1",
     "tap-spec": "^4.1.1",
     "tape": "^4.5.1",
     "uglifyify": "^3.0.1",
-    "vdux": "^2.4.5",
-    "vdux-form": "^1.0.4",
     "watchify": "^3.7.0"
   }
 }
