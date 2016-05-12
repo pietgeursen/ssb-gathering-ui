@@ -10,7 +10,18 @@ const router = enroute({
 })
 function Router (model, dispatch) {
   const Component = router(model.url)
+  document.onclick = handleLinkClicks(setUrl)
 
+  function handleLinkClicks (setUrl) {
+    return e => {
+      if (e.target.nodeName === 'A') {
+        e.preventDefault()
+        const href = e.target.getAttribute('href')
+        console.log(href);
+        dispatch(setUrl(href))
+      }
+    }
+  }
   return yo`
         <div>
           ${Nav()}
@@ -22,6 +33,12 @@ function Router (model, dispatch) {
 }
 
 
+function setUrl(url){
+ return {
+  event: 'SET_URL',
+  url
+ } 
+}
 
 
 export default Router

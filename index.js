@@ -27,6 +27,7 @@ const app = {
     console.log('in reducer', model, event);
     if(!event) return {model: {...model}}
     if(event.event == 'SET_URL'){
+      console.log('seturl');
       return {model: {...model, url: event.url}} 
     }
     return {model: {...model}}
@@ -50,25 +51,6 @@ pull(client.findFutureEvents(),pull.map(function(event) {
 
 
 var streams = start(app)
-
-function setUrl(url){
- return {
-  event: 'SET_URL',
-  url
- } 
-}
-
-document.onclick = handleLinkClicks(setUrl)
-function handleLinkClicks (setUrl) {
-  return e => {
-    if (e.target.nodeName === 'A') {
-      e.preventDefault()
-      const href = e.target.getAttribute('href')
-      console.log(href);
-      streams.onEvent(setUrl(href))
-    }
-  }
-}
 
 streams.watchView(function(view) {
   yo.update(main, view)
