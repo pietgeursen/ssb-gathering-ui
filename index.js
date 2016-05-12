@@ -5,8 +5,7 @@ import moment from 'moment'
 import SSBClient from './ws-client'
 import pull from 'pull-stream'
 import api from './api'
-import App from './components/app'
-//import Router from './components/router'
+import Router from './components/router'
 const main = document.querySelector('main')
 var client = SSBClient(api)
 
@@ -17,13 +16,25 @@ for(event of sbotSeedEvents){
 }
 
 const app = {
-  init: function(){return {model: {events: sbotSeedEvents}}},
+  init: function(){
+    return {
+      model: {
+        events: sbotSeedEvents,
+        url: '/'
+      }
+    }},
   update: function(model, event){
-    console.log(model, event);
-    return {model: model}
+    console.log('in reducer', model, event);
+    if(!event) return {model: {...model}}
+    if(event.event == 'SET_URL'){
+      return {model: {...model, url: event.url}} 
+    }
+    return {model: {...model}}
   },
-  view: App,
-  run: function(effect){}
+  view: Router,
+  run: function(effect){
+    return
+  }
 }
 
 
@@ -39,6 +50,25 @@ pull(client.findFutureEvents(),pull.map(function(event) {
 
 
 var streams = start(app)
+
+function setUrl(url){
+ return {
+  event: 'SET_URL',
+  url
+ } 
+}
+
+document.onclick = handleLinkClicks(setUrl)
+function handleLinkClicks (setUrl) {
+  return e => {
+    if (e.target.nodeName === 'A') {
+      e.preventDefault()
+      const href = e.target.getAttribute('href')
+      console.log(href);
+      streams.onEvent(setUrl(href))
+    }
+  }
+}
 
 streams.watchView(function(view) {
   yo.update(main, view)

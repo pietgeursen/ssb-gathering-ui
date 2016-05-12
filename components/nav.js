@@ -2,9 +2,8 @@ import yo from 'yo-yo'
 const sf = require('sheetify')
 const prefix = sf('./nav.css')
 
-const Nav = {
-  render(){
-    return (
+function Nav(){
+    return yo` 
       <div class={prefix}>
         <nav class='navbar'>
           <div class='container'> 
@@ -15,9 +14,8 @@ const Nav = {
             </ul>
           </div>
         </nav>
-      </div>
-    )
-  }
+      </div>`
+    
 }
 
 export default Nav
