@@ -1,4 +1,4 @@
-import {element} from 'deku'
+import yo from 'yo-yo'
 import enroute from 'enroute'
 import App from './app'
 import Create from './create'

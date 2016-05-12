@@ -1,13 +1,11 @@
-import {element} from 'deku'
+import yo from 'yo-yo'
 const sf = require('sheetify')
 const prefix = sf('./app.css')
 import Event from './event'
 
-const App = {
-
-  render ({props}) {
-    return (
-      <div class={prefix}>
+function App (model, dispatch) {
+    
+      return yo`<div class={prefix}>
           <div class='section'>
             <select>
               <option value='upcoming'>Upcoming</option>
@@ -17,14 +15,12 @@ const App = {
             <a class='button button-primary create-button' href='/#/create'>Create</a> 
           </div>
           <div>
-            {props.state.events.map(function(event) {
-              return <Event event={event} eventId={event.status} />
+            ${model.events.map(function(event) {
+              return Event(event, dispatch) 
             })}
           </div>
-      </div>
-      )
+      </div>`
   }
 
-}
 
 export default App

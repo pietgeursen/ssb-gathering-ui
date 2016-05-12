@@ -1,4 +1,4 @@
-import {element} from 'deku'
+import yo from 'yo-yo'
 const sf = require('sheetify')
 const prefix = sf('./nav.css')
 
