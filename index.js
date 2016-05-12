@@ -1,7 +1,7 @@
-import start from 'chur'
+import start from 'inu'
 import yo from 'yo-yo'
 import moment from 'moment'
-
+import ready from 'domready'
 import SSBClient from './ws-client'
 import pull from 'pull-stream'
 import api from './api'
@@ -17,6 +17,7 @@ for(event of sbotSeedEvents){
 
 const app = {
   init: function(){
+    console.log('in init');
     return {
       model: {
         events: sbotSeedEvents,
@@ -24,12 +25,7 @@ const app = {
       }
     }},
   update: function(model, event){
-    console.log('in reducer', model, event);
-    if(!event) return {model: {...model}}
-    if(event.event == 'SET_URL'){
-      console.log('seturl');
-      return {model: {...model, url: event.url}} 
-    }
+    console.log('in reducer');
     return {model: {...model}}
   },
   view: Router,
@@ -49,9 +45,10 @@ pull(client.findFutureEvents(),pull.map(function(event) {
   //console.log(event);
 }))
 
+ready(function(){
+  var streams = start(app)
 
-var streams = start(app)
-
-streams.watchView(function(view) {
-  yo.update(main, view)
+  streams.viewStream(function(view) {
+    yo.update(main, view)
+  })
 })

@@ -17,7 +17,6 @@ function Router (model, dispatch) {
       if (e.target.nodeName === 'A') {
         e.preventDefault()
         const href = e.target.getAttribute('href')
-        console.log(href);
         dispatch(setUrl(href))
       }
     }
@@ -35,7 +34,7 @@ function Router (model, dispatch) {
 
 function setUrl(url){
  return {
-  event: 'SET_URL',
+  type: 'SET_URL',
   url
  } 
 }
