@@ -3,24 +3,16 @@ import enroute from 'enroute'
 import App from './app'
 //import Create from './create'
 import Nav from './nav'
+import catchLinks from 'catch-links'
 
 const router = enroute({
   '/': () => App,
  // '/#/create': () => Create
 })
 function Router (model, dispatch) {
+  catchLinks(window, function(href){dispatch(setUrl(href))})
   const Component = router(model.url)
-  document.onclick = handleLinkClicks(setUrl)
 
-  function handleLinkClicks (setUrl) {
-    return e => {
-      if (e.target.nodeName === 'A') {
-        e.preventDefault()
-        const href = e.target.getAttribute('href')
-        dispatch(setUrl(href))
-      }
-    }
-  }
   return yo`
         <div>
           ${Nav()}
@@ -34,7 +26,7 @@ function Router (model, dispatch) {
 
 function setUrl(url){
  return {
-  type: 'SET_URL',
+  type: 'URL_DID_CHANGE',
   url
  } 
 }

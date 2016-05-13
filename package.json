@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/pietgeursen/",
   "dependencies": {
+    "catch-links": "^2.0.1",
     "classnames": "^2.2.5",
     "domready": "^1.0.8",
     "enroute": "^1.0.1",
