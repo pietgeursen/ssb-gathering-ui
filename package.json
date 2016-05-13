@@ -32,6 +32,7 @@
     "classnames": "^2.2.5",
     "domready": "^1.0.8",
     "enroute": "^1.0.1",
+    "insert-css": "^0.2.0",
     "inu": "^1.0.2",
     "moment": "^2.13.0",
     "muxrpc": "^6.3.3",
