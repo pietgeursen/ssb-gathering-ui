@@ -10,6 +10,7 @@ const router = enroute({
  // '/#/create': () => Create
 })
 function Router (model, dispatch) {
+  console.log('in router view');
   catchLinks(window, function(href){dispatch(setUrl(href))})
   const Component = router(model.url)
 

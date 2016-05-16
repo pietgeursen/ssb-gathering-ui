@@ -1,12 +1,10 @@
-import start from 'inu'
+import {start, pull} from 'inu'
 import yo from 'yo-yo'
 import moment from 'moment'
 import ready from 'domready'
 import SSBClient from './ws-client'
-import pull from 'pull-stream'
 import api from './api'
 import Router from './components/router'
-const main = document.querySelector('main')
 var client = SSBClient(api)
 
 const sbotSeedEvents = require('./util/seedEvents')
@@ -36,38 +34,48 @@ const app = {
         url: '/'
       },
       effect: {
-        type: 'INIT' 
+        type: 'INIT'
       }
   }},
   update: function(model, event){
     console.log('in reducer', model, event);
-    if(!event) return {model: model}
-
-    if(event.type == "URL_DID_CHANGE"){
-      return {model: {...model, url: event.url}} 
+    if(!event) return {model}
+    switch(event.type){
+      case "URL_DID_CHANGE": 
+        return {model: {...model, url: event.url}} 
+      case "EVENT_WAS_ADDED":
+        return {model: { ...model,
+          events: events.concat([event.eventToAdd])
+        }}
+      case "DID_RSVP":
+        return {model: model, effect: {type: "SCHEDULE_RSVP", id: event.id, status: event.status}}
     }
-    if(event.type == "EVENT_WAS_ADDED"){
-      return {model: { ...model,
-        events: events.concat([event.eventToAdd])
-      }}
-    }
-    return {model: {...model}}
+    return {model}
   },
   view: Router,
   run: function(effect){
-    if(effect.type == "INIT"){
-      return futureEventStream() 
+    console.log('in run with effect:', effect);
+    switch(effect.type){
+      case "INIT": 
+        return futureEventStream() 
+      case "SCHEDULE_RSVP":
+        return pull.empty()
+
     }
-    return
+    return pull.empty()
   }
 }
 
 
 
 ready(function(){
-  var streams = start(app)
-
-  streams.viewStream(function(view) {
+  const main = document.querySelector('main')
+  const {views} = start(app)
+  
+  pull(
+    views(),
+    pull.drain(function(view) {
+    console.log('in view with:', view);
     yo.update(main, view)
-  })
+  }))
 })

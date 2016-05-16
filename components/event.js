@@ -7,16 +7,21 @@ import ActiveButton from './activeButton'
 
 function rsvp(status, id) {
  return {
-   type: 'RSVP',
-   status,
-   id
+     type: 'DID_RSVP',
+     status,
+     id
  } 
 }
 
 
 function Event (model, dispatch){
     const event = model
+    console.log(event);
     const time = moment(event.dateTime).calendar()
+    const going = () => dispatch(rsvp(1, event.id))    
+    const maybe = () => dispatch(rsvp(0, event.id))    
+    const no = () => dispatch(rsvp(-1, event.id))    
+   
     return yo` 
       <div class=${classNames([prefix, 'section'])}>  
         <div class='details row'>  
@@ -32,13 +37,13 @@ function Event (model, dispatch){
         </div>  
         <div class='respond-buttons row'>  
           <div class='four columns'>
-            ${ActiveButton( {}, dispatch) } 
+            ${ActiveButton( {text: 'GOING', active: event.status == 1, click: going}, dispatch) } 
           </div>
           <div class='four columns'>
-            ${ActiveButton( {}, dispatch) } 
+            ${ActiveButton( {text: 'MAYBE', active: event.status == 0, click: maybe}, dispatch) } 
           </div>
           <div class='four columns'>
-            ${ActiveButton( {}, dispatch) } 
+            ${ActiveButton( {text: 'NO', active: event.status == -1, click: no}, dispatch) } 
           </div>
         </div>  
       </div>`  
