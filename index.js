@@ -1,11 +1,10 @@
-import {start, pull} from 'inu'
-import yo from 'yo-yo'
+import {start, pull, html} from 'inu'
 import moment from 'moment'
 import ready from 'domready'
 import SSBClient from './ws-client'
 import api from './api'
 import Router from './components/router'
-var client = SSBClient(api)
+const client = SSBClient(api)
 
 const sbotSeedEvents = require('./util/seedEvents')
 function futureEventStream(){
@@ -76,6 +75,6 @@ ready(function(){
     views(),
     pull.drain(function(view) {
     console.log('in view with:', view);
-    yo.update(main, view)
+    html.update(main, view)
   }))
 })

@@ -1,6 +1,7 @@
 import moment from 'moment'
 module.exports = [
 {
+    id: 1,
     type: 'event',
     imageUrl: "http://vignette3.wikia.nocookie.net/thebiglebowski/images/7/7e/The_Dude.jpeg/revision/latest?cb=20111216183045",
     title: "Lebowskifest",
@@ -10,6 +11,7 @@ module.exports = [
     createdBy: "Piet"
   },
   {
+    id: 2,
     type: 'event',
     imageUrl: "http://25.media.tumblr.com/tumblr_llydmkQML11qaw9gjo1_400.jpg",
     title: "Art hack",

@@ -1,4 +1,4 @@
-import yo from 'yo-yo'
+import {html} from 'inu'
 const sf = require('sheetify')
 const prefix = sf('./create.css')
 
@@ -27,7 +27,7 @@ function onSubmit(form) {
 
 function render ({props, local}) {
   return (
-    <div class={prefix}>
+    <div class=${prefix}>
       <div class='section'>
         <h2>Create a new event</h2>
         <Form validate={() => {return {valid:true}}} onSubmit={onSubmit}>

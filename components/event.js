@@ -1,4 +1,4 @@
-import yo from 'yo-yo'
+import {html} from 'inu'
 import moment from 'moment'
 const sf = require('sheetify')
 const prefix = sf('./event.css')
@@ -22,7 +22,7 @@ function Event (model, dispatch){
     const maybe = () => dispatch(rsvp(0, event.id))    
     const no = () => dispatch(rsvp(-1, event.id))    
    
-    return yo` 
+    return html` 
       <div class=${classNames([prefix, 'section'])}>  
         <div class='details row'>  
           <div class='pic four columns'>  

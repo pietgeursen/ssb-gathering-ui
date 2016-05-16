@@ -1,4 +1,4 @@
-import yo from 'yo-yo'
+import {html} from 'inu'
 import enroute from 'enroute'
 import App from './app'
 //import Create from './create'
@@ -14,7 +14,7 @@ function Router (model, dispatch) {
   catchLinks(window, function(href){dispatch(setUrl(href))})
   const Component = router(model.url)
 
-  return yo`
+  return html`
         <div>
           ${Nav()}
           <div class='container'>

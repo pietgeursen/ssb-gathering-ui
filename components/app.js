@@ -1,11 +1,11 @@
-import yo from 'yo-yo'
+import {html} from 'inu'
 const sf = require('sheetify')
 const prefix = sf('./app.css')
 import Event from './event'
 
 function App (model, dispatch) {
     
-      return yo`<div class={prefix}>
+      return html`<div class=${prefix}>
           <div class='section'>
             <select>
               <option value='upcoming'>Upcoming</option>
