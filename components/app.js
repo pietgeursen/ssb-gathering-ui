@@ -15,7 +15,14 @@ function App (model, dispatch) {
           </div>
           <div>
             ${model.events.map(function(event) {
-              return Event(event, dispatch) 
+              const rsvp = model.rsvps.find(function(rsvp) {
+                return rsvp.link == event.id 
+              })
+              const eventAndRsvp = {
+                event: event,
+                rsvp: rsvp 
+              }
+              return Event(eventAndRsvp, dispatch) 
             })}
           </div>
       </div>`

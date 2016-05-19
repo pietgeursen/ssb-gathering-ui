@@ -43,10 +43,10 @@ function myRsvpStream(){
 const mergedStreams = pullMany([myRsvpStream(), futureEventStream()])
 const app = {
   init: function(){
-    console.log('in init');
     return {
       model: {
         events: [],
+        rsvps: [],
         url: '/'
       },
       effect: {
@@ -54,11 +54,24 @@ const app = {
       }
   }},
   update: function(model, event){
-    console.log('in reducer', model, event);
     if(!event) return {model}
     switch(event.type){
       case "SBOT_MY_RSVP_WAS_ADDED":
-        return {model}
+        const newRsvp = event.payload.vote
+        const rsvpIndex = model.rsvps.findIndex(function(rsvp) {
+          return rsvp.link == newRsvp.link 
+        })
+        if(rsvpIndex >= 0){
+          const newRsvps = [...model.rsvps] 
+          newRsvps[rsvpIndex] = newRsvp
+          return {model: { ...model,
+            rsvps: newRsvps
+          }}
+        } else {
+          return {model: { ...model,
+            rsvps: model.rsvps.concat([event.payload.vote])
+          }}
+        }
       case "SBOT_EVENT_WAS_ADDED":
         return {model: { ...model,
           events: model.events.concat([event.payload])
@@ -77,13 +90,11 @@ const app = {
       </main>`
   },
   run: function(effect){
-    console.log('in run with effect:', effect);
     switch(effect.type){
       case "INIT": 
         return mergedStreams 
       case "SCHEDULE_RSVP":
         client.publish(Rsvp(effect.id, effect.status), function(err, res) {
-          console.log(err,res);
         })
         return pull.empty()
     }

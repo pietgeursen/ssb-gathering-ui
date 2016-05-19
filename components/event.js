@@ -5,7 +5,7 @@ const prefix = sf('./event.css')
 import classNames from 'classnames'
 import ActiveButton from './activeButton'
 
-function rsvp(status, id) {
+function doRsvp(status, id) {
  return {
      type: 'UI_DID_RSVP',
      status,
@@ -15,11 +15,13 @@ function rsvp(status, id) {
 
 
 function Event (model, dispatch){
-    const event = model
+    const event = model.event
+    const rsvp = model.rsvp || {}
+    console.log('in event with model', model);
     const time = moment(event.dateTime).calendar()
-    const going = () => dispatch(rsvp(1, event.id))    
-    const maybe = () => dispatch(rsvp(0, event.id))    
-    const no = () => dispatch(rsvp(-1, event.id))    
+    const going = () => dispatch(doRsvp(1, event.id))    
+    const maybe = () => dispatch(doRsvp(0, event.id))    
+    const no = () => dispatch(doRsvp(-1, event.id))    
    
     return html` 
       <div class=${classNames([prefix, 'section'])}>  
@@ -36,13 +38,13 @@ function Event (model, dispatch){
         </div>  
         <div class='respond-buttons row'>  
           <div class='four columns'>
-            ${ActiveButton( {text: 'GOING', active: event.status == 1, click: going}, dispatch) } 
+            ${ActiveButton( {text: 'GOING', active: rsvp.value == 1, click: going}, dispatch) } 
           </div>
           <div class='four columns'>
-            ${ActiveButton( {text: 'MAYBE', active: event.status == 0, click: maybe}, dispatch) } 
+            ${ActiveButton( {text: 'MAYBE', active: rsvp.value == 0, click: maybe}, dispatch) } 
           </div>
           <div class='four columns'>
-            ${ActiveButton( {text: 'NO', active: event.status == -1, click: no}, dispatch) } 
+            ${ActiveButton( {text: 'NO', active: rsvp.value == -1, click: no}, dispatch) } 
           </div>
         </div>  
       </div>`  
