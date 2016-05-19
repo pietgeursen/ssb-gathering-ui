@@ -1,5 +1,4 @@
 import {start, pull, html} from 'inu'
-import moment from 'moment'
 import ready from 'domready'
 import SSBClient from './ws-client'
 import api from './api'
