@@ -4,7 +4,6 @@ const prefix = sf('./app.css')
 import Event from './event'
 
 function App (model, dispatch) {
-    
       return html`<div class=${prefix}>
           <div class='section'>
             <select>

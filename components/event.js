@@ -16,7 +16,6 @@ function rsvp(status, id) {
 
 function Event (model, dispatch){
     const event = model
-    console.log(event);
     const time = moment(event.dateTime).calendar()
     const going = () => dispatch(rsvp(1, event.id))    
     const maybe = () => dispatch(rsvp(0, event.id))    
@@ -32,7 +31,7 @@ function Event (model, dispatch){
             <h3>${event.title}</h3>
             <h4>${time}</h4>
             <h4>${event.location}</h4>
-            <h4>${event.createdBy}</h4>
+            <h4>${event.author}</h4>
           </div>  
         </div>  
         <div class='respond-buttons row'>  
@@ -47,7 +46,6 @@ function Event (model, dispatch){
           </div>
         </div>  
       </div>`  
-    
   }
 
 

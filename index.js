@@ -6,20 +6,22 @@ import api from './api'
 import Router from './components/router'
 const client = SSBClient(api)
 
-const sbotSeedEvents = require('./util/seedEvents')
+import seed from './util/seedEvents'
+
 function futureEventStream(){
   return pull(
   client.findFutureEvents(),
   pull.map(function(event) {
     return {
       ...event.value.content,
+      dateTime: new Date(event.value.content.dateTime),
       author : event.value.author,
       id : event.key
     }}), 
   pull.map(function(event) {
     return {
-      event: {type: 'EVENT_WAS_ADDED'},
-      eventToAdd: event
+      type: 'EVENT_WAS_ADDED',
+      payload: event
     } 
   }))
 }
@@ -29,7 +31,7 @@ const app = {
     console.log('in init');
     return {
       model: {
-        events: sbotSeedEvents,
+        events: [],
         url: '/'
       },
       effect: {
@@ -44,20 +46,26 @@ const app = {
         return {model: {...model, url: event.url}} 
       case "EVENT_WAS_ADDED":
         return {model: { ...model,
-          events: events.concat([event.eventToAdd])
+          events: model.events.concat([event.payload])
         }}
       case "DID_RSVP":
         return {model: model, effect: {type: "SCHEDULE_RSVP", id: event.id, status: event.status}}
     }
     return {model}
   },
-  view: Router,
+  view: (model, dispatch) => {
+    return html`
+      <main>
+        ${Router(model, dispatch)}
+      </main>`
+  },
   run: function(effect){
     console.log('in run with effect:', effect);
     switch(effect.type){
       case "INIT": 
         return futureEventStream() 
       case "SCHEDULE_RSVP":
+        //sbot.publish(Rsvp(effect.id, effect.status))
         return pull.empty()
 
     }

@@ -34,7 +34,7 @@
     "domready": "^1.0.8",
     "enroute": "^1.0.1",
     "insert-css": "^0.2.0",
-    "inu": "^2.2.0",
+    "inu": "^2.3.0",
     "moment": "^2.13.0",
     "muxrpc": "^6.3.3",
     "pull-serializer": "^0.3.2",
