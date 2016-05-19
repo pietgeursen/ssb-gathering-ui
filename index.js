@@ -1,59 +1,17 @@
 import {start, pull, html} from 'inu'
-import pullMany from 'pull-many'
-import pullPushable from 'pull-pushable'
 import moment from 'moment'
 import ready from 'domready'
 import SSBClient from './ws-client'
 import api from './api'
 import Router from './components/router'
-import catchLinks from 'catch-links'
 const client = SSBClient(api)
 
-import seed from './util/seedEvents'
+import actionsStream from './streams/actionsStream'
+
 function Rsvp(id, vote){
   return { type: 'rsvp', vote: { link: id, value: vote } } 
 }
-function futureEventStream(){
-  return pull(
-  client.findFutureEvents(),
-  pull.map(function(event) {
-    return {
-      ...event.value.content,
-      dateTime: new Date(event.value.content.dateTime),
-      author : event.value.author,
-      id : event.key
-    }}), 
-  pull.map(function(event) {
-    return {
-      type: 'SBOT_EVENT_WAS_ADDED',
-      payload: event
-    } 
-  }))
-}
 
-function myRsvpStream(){
-  return pull(
-  client.myRsvps(),
-  pull.map(function(rsvp) {
-    return {
-      type: 'SBOT_MY_RSVP_WAS_ADDED',
-      payload: rsvp
-    } 
-  }))
-}
-
-function urlChangedStream(){
-  var pushable = pullPushable()
-  catchLinks(window, function(href){pushable.push(setUrl(href))})
-  return pushable
-}
-function setUrl(url){
- return {
-  type: 'UI_URL_DID_CHANGE',
-  url
- } 
-}
-const mergedStreams = pullMany([myRsvpStream(), futureEventStream(), urlChangedStream()])
 const app = {
   init: function(){
     return {
@@ -67,7 +25,6 @@ const app = {
       }
   }},
   update: function(model, event){
-    
     if(!event) return {model}
     switch(event.type){
       case "SBOT_MY_RSVP_WAS_ADDED":
@@ -106,7 +63,7 @@ const app = {
   run: function(effect){
     switch(effect.type){
       case "INIT": 
-        return mergedStreams 
+        return actionsStream(client) 
       case "SCHEDULE_RSVP":
         client.publish(Rsvp(effect.id, effect.status), function(err, res) { })
         return pull.empty()
@@ -114,8 +71,6 @@ const app = {
     return pull.empty()
   }
 }
-
-
 
 ready(function(){
   const main = document.querySelector('main')
