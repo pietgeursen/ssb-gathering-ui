@@ -38,6 +38,7 @@
     "moment": "^2.13.0",
     "muxrpc": "^6.3.3",
     "pull-many": "^1.0.6",
+    "pull-pushable": "^2.0.0",
     "pull-serializer": "^0.3.2",
     "pull-ws-server": "^1.8.0",
     "scuttlebot": "^8.1.0",

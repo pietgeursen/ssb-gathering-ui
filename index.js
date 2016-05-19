@@ -1,10 +1,12 @@
 import {start, pull, html} from 'inu'
 import pullMany from 'pull-many'
+import pullPushable from 'pull-pushable'
 import moment from 'moment'
 import ready from 'domready'
 import SSBClient from './ws-client'
 import api from './api'
 import Router from './components/router'
+import catchLinks from 'catch-links'
 const client = SSBClient(api)
 
 import seed from './util/seedEvents'
@@ -40,7 +42,18 @@ function myRsvpStream(){
   }))
 }
 
-const mergedStreams = pullMany([myRsvpStream(), futureEventStream()])
+function urlChangedStream(){
+  var pushable = pullPushable()
+  catchLinks(window, function(href){pushable.push(setUrl(href))})
+  return pushable
+}
+function setUrl(url){
+ return {
+  type: 'UI_URL_DID_CHANGE',
+  url
+ } 
+}
+const mergedStreams = pullMany([myRsvpStream(), futureEventStream(), urlChangedStream()])
 const app = {
   init: function(){
     return {
@@ -54,6 +67,7 @@ const app = {
       }
   }},
   update: function(model, event){
+    
     if(!event) return {model}
     switch(event.type){
       case "SBOT_MY_RSVP_WAS_ADDED":
@@ -94,8 +108,7 @@ const app = {
       case "INIT": 
         return mergedStreams 
       case "SCHEDULE_RSVP":
-        client.publish(Rsvp(effect.id, effect.status), function(err, res) {
-        })
+        client.publish(Rsvp(effect.id, effect.status), function(err, res) { })
         return pull.empty()
     }
     return pull.empty()

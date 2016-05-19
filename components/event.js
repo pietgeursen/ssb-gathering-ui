@@ -17,7 +17,6 @@ function doRsvp(status, id) {
 function Event (model, dispatch){
     const event = model.event
     const rsvp = model.rsvp || {}
-    console.log('in event with model', model);
     const time = moment(event.dateTime).calendar()
     const going = () => dispatch(doRsvp(1, event.id))    
     const maybe = () => dispatch(doRsvp(0, event.id))    
