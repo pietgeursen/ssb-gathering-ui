@@ -1,12 +1,10 @@
-import element from 'vdux/element'
+import {html} from 'inu'
 const sf = require('sheetify')
 
-const ActiveButton = {
-  render(state){
-    return (
-      <button onClick={state.props.click} class={state.props.active ? 'button-primary' : 'button'}>{state.props.text}</button>  
-    ) 
-  }
+function ActiveButton (model, dispatch){
+  return html`
+    <button onclick=${model.click} class=${model.active ? 'button-primary' : 'button'}>${model.text}</button>  
+  `
 }
 
 export default ActiveButton

@@ -1,94 +1,88 @@
-import vdux from 'vdux/dom'
-import element from 'vdux/element'
-import ready from 'domready'
+import {start, pull, html} from 'inu'
 import moment from 'moment'
-
+import ready from 'domready'
 import SSBClient from './ws-client'
-import pull from 'pull-stream'
 import api from './api'
-import App from './components/app'
 import Router from './components/router'
+const client = SSBClient(api)
 
-var client = SSBClient(api)
-var sbotSeedEvents = [
-{
-    type: 'event',
-    imageUrl: "http://vignette3.wikia.nocookie.net/thebiglebowski/images/7/7e/The_Dude.jpeg/revision/latest?cb=20111216183045",
-    title: "Lebowskifest",
-    description: "Abiding, bowling, the occasional acid flashback.",
-    location: "Bowling Alley",
-    dateTime: moment().add(2, 'days').toDate(),
-    createdBy: "Piet"
+import seed from './util/seedEvents'
+
+function futureEventStream(){
+  return pull(
+  client.findFutureEvents(),
+  pull.map(function(event) {
+    return {
+      ...event.value.content,
+      dateTime: new Date(event.value.content.dateTime),
+      author : event.value.author,
+      id : event.key
+    }}), 
+  pull.map(function(event) {
+    return {
+      type: 'EVENT_WAS_ADDED',
+      payload: event
+    } 
+  }))
+}
+
+const app = {
+  init: function(){
+    console.log('in init');
+    return {
+      model: {
+        events: [],
+        url: '/'
+      },
+      effect: {
+        type: 'INIT'
+      }
+  }},
+  update: function(model, event){
+    console.log('in reducer', model, event);
+    if(!event) return {model}
+    switch(event.type){
+      case "URL_DID_CHANGE": 
+        return {model: {...model, url: event.url}} 
+      case "EVENT_WAS_ADDED":
+        return {model: { ...model,
+          events: model.events.concat([event.payload])
+        }}
+      case "DID_RSVP":
+        return {model: model, effect: {type: "SCHEDULE_RSVP", id: event.id, status: event.status}}
+    }
+    return {model}
   },
-  {
-    type: 'event',
-    imageUrl: "http://25.media.tumblr.com/tumblr_llydmkQML11qaw9gjo1_400.jpg",
-    title: "Art hack",
-    description: "Art for hacking's sake",
-    location: "Enspiral space",
-    dateTime: moment().add(1, 'days').toDate(),
-    createdBy: "Mikey",
-    status: 0
-  }
-]
+  view: (model, dispatch) => {
+    return html`
+      <main>
+        ${Router(model, dispatch)}
+      </main>`
+  },
+  run: function(effect){
+    console.log('in run with effect:', effect);
+    switch(effect.type){
+      case "INIT": 
+        return futureEventStream() 
+      case "SCHEDULE_RSVP":
+        //sbot.publish(Rsvp(effect.id, effect.status))
+        return pull.empty()
 
-for(event of sbotSeedEvents){
-  client.createEvent(event,function(err, data) {
-    console.log(err, data);
-  })
+    }
+    return pull.empty()
+  }
 }
 
-function reducer(state, action) {
-  if(action.type === "RSVP"){
-   const newState = {...state}
-   const newEvent = newState.events.find(function(event) {
-    return event.id == action.id 
-   })
-   newEvent.status = action.status
-   return newState  
-  }
-  if(action.type === "DID_CREATE_EVENT"){
-    const newState = {...state}
-    if(newState.events.findIndex(function(event) {
-      return event.id == action.event.id 
-    }) >= 0) return newState
-    newState.events.push(action.event)
-    return newState
-  }
-  if(action.type === "DID_SUBMIT_EVENT"){
-    client.createEvent(action.event,function(err, data) {
-      console.log(err, data);
-    })
-    return state
-  }
-  return state
-}
 
-const initialState = {
-  events: []    
-}
 
-const {subscribe, render, dispatch} = vdux({reducer, initialState})
-
-pull(client.findFutureEvents(),pull.map(function(event) {
-  return {
-    ...event.value.content,
-    author : event.value.author,
-    id : event.key
-  }
-}), pull.drain(function(event) {
- console.log(event);
- dispatch(
-   {
-     type: "DID_CREATE_EVENT",
-     event: event
-   }
-   ) 
-}))
-
-ready(() => {
-  subscribe(state => {
-    render(<Router state={state} />)
-  })
+ready(function(){
+  const main = document.querySelector('main')
+  const {views} = start(app)
+  
+  pull(
+    views(),
+    pull.drain(function(view) {
+    console.log('in view with:', view);
+    html.update(main, view)
+  }))
 })
-

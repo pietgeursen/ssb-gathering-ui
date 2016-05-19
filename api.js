@@ -1,7 +1,8 @@
 module.exports = {
   findEvents: 'source',
   findFutureEvents: 'source',
-  createEvent: 'async'
+  createEvent: 'async',
+  myRsvps: 'source'
 }
 
 

@@ -1,11 +1,10 @@
-import element from 'vdux/element'
+import {html} from 'inu'
 const sf = require('sheetify')
 const prefix = sf('./nav.css')
 
-const Nav = {
-  render(){
-    return (
-      <div class={prefix}>
+function Nav(){
+    return html` 
+      <div class=${prefix}>
         <nav class='navbar'>
           <div class='container'> 
             <ul class='navbar-list'>
@@ -15,9 +14,8 @@ const Nav = {
             </ul>
           </div>
         </nav>
-      </div>
-    )
-  }
+      </div>`
+    
 }
 
 export default Nav

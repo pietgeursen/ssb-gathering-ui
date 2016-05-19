@@ -1,5 +1,4 @@
-import element from 'vdux/element'
-import Form from 'vdux-form'
+import {html} from 'inu'
 const sf = require('sheetify')
 const prefix = sf('./create.css')
 
@@ -20,7 +19,7 @@ function postEvent(title, location, description, date, time, mentions, imageUrl)
 function onSubmit(form) {
   const event = postEvent(form.name, form.location, form.desctiption, form.date, form.time)
   return {
-    type: "DID_SUBMIT_EVENT",
+    type: "DID_SUBMIT_NEW_EVENT",
     event
   }  
 }
@@ -28,7 +27,7 @@ function onSubmit(form) {
 
 function render ({props, local}) {
   return (
-    <div class={prefix}>
+    <div class=${prefix}>
       <div class='section'>
         <h2>Create a new event</h2>
         <Form validate={() => {return {valid:true}}} onSubmit={onSubmit}>
