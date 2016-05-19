@@ -7,7 +7,7 @@ import ActiveButton from './activeButton'
 
 function rsvp(status, id) {
  return {
-     type: 'DID_RSVP',
+     type: 'UI_DID_RSVP',
      status,
      id
  } 

@@ -26,7 +26,7 @@ function Router (model, dispatch) {
 
 function setUrl(url){
  return {
-  type: 'URL_DID_CHANGE',
+  type: 'UI_URL_DID_CHANGE',
   url
  } 
 }

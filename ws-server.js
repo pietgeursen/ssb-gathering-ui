@@ -10,7 +10,8 @@ module.exports = function (sbot) {
       findEvents: sbot.events.find,
       findFutureEvents: sbot.events.future,
       createEvent: sbot.events.create,
-      myRsvps: sbot.events.myRsvps
+      myRsvps: sbot.events.myRsvps,
+			publish: sbot.publish
     })
 
     // start the stream
