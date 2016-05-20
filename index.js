@@ -12,6 +12,7 @@ function Rsvp(id, vote){
 }
 
 const app = {
+
   init: function(){
     return {
       model: {
@@ -23,11 +24,12 @@ const app = {
         type: 'INIT'
       }
   }},
+
   update: function(model, event){
     if(!event) return {model}
     switch(event.type){
       case "SBOT_MY_RSVP_WAS_ADDED":
-        const newRsvp = event.payload.vote
+        const newRsvp = event.payload
         const rsvpIndex = model.rsvps.findIndex(function(rsvp) {
           return rsvp.link == newRsvp.link 
         })
@@ -39,7 +41,7 @@ const app = {
           }}
         } else {
           return {model: { ...model,
-            rsvps: model.rsvps.concat([event.payload.vote])
+            rsvps: model.rsvps.concat([event.payload])
           }}
         }
       case "SBOT_EVENT_WAS_ADDED":
@@ -53,12 +55,14 @@ const app = {
     }
     return {model}
   },
+
   view: (model, dispatch) => {
     return html`
       <main>
         ${Router(model, dispatch)}
       </main>`
   },
+
   run: function(effect){
     switch(effect.type){
       case "INIT": 
