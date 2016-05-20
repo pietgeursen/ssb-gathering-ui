@@ -1,10 +1,10 @@
 import {pull} from 'inu'
-import sbotEventWasAddedAction from '../actions/sbotEventWasAdded'
+import SbotEventWasAddedAction from '../actions/sbotEventWasAdded'
 
 function sbotFutureEventWasAdded(client){
   return pull(
     client.findFutureEvents(),
-    pull.map(sbotEventWasAddedAction)
+    pull.map((event) => SbotEventWasAddedAction({payload: event}))
   )
 }
 

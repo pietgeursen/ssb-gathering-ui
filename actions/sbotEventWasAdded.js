@@ -1,8 +1,10 @@
-function sbotEventWasAdded(event) {
-  return {
-    type: 'SBOT_EVENT_WAS_ADDED',
-    payload: event
-  } 
+import t from 'tcomb'
+
+const SbotEventAdded = t.struct({payload: t.Object}, 'sbotEventWasAdded')
+SbotEventAdded.prototype.update = function(model) {
+  return {model: { ...model,
+    events: model.events.concat([this.payload])
+  }}
 }
 
-export default sbotEventWasAdded
+export default SbotEventAdded

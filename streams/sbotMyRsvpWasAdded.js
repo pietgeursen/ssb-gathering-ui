@@ -1,10 +1,10 @@
 import {pull} from 'inu'
-import sbotMyRsvpWasAddedAction from '../actions/sbotMyRsvpWasAdded'
+import SbotMyRsvpWasAddedAction from '../actions/sbotMyRsvpWasAdded'
 
 function sbotMyRsvpWasAdded(client){
   return pull(
     client.myRsvps(),
-    pull.map(sbotMyRsvpWasAddedAction)
+    pull.map((rsvp) => SbotMyRsvpWasAddedAction({payload:rsvp}))
   )
 }
 

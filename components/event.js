@@ -4,23 +4,15 @@ const sf = require('sheetify')
 const prefix = sf('./event.css')
 import classNames from 'classnames'
 import ActiveButton from './activeButton'
-
-function doRsvp(status, id) {
- return {
-     type: 'UI_DID_RSVP',
-     status,
-     id
- } 
-}
-
+import UiDidRsvp from '../actions/uiDidRsvp'
 
 function Event (model, dispatch){
     const event = model.event
     const rsvp = model.rsvp || {}
     const time = moment(event.dateTime).calendar()
-    const going = () => dispatch(doRsvp(1, event.id))    
-    const maybe = () => dispatch(doRsvp(0, event.id))    
-    const no = () => dispatch(doRsvp(-1, event.id))    
+    const going = () => dispatch(UiDidRsvp({payload: {status: 1, id: event.id}}))    
+    const maybe = () => dispatch(UiDidRsvp({payload: {status: 0, id: event.id}}))    
+    const no = () => dispatch(UiDidRsvp({payload: {status: -1, id: event.id}}))    
    
     return html` 
       <div class=${classNames([prefix, 'section'])}>  
