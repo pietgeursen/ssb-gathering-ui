@@ -1,22 +1,27 @@
 import t from 'tcomb'
+import Rsvp from '../models/rsvp'
+import Model from '../models/model'
 
-const SbotMyRsvpWasAdded = t.struct({payload: t.Object}, 'sbotMyRsvpWasAdded')
+const SbotMyRsvpWasAdded = t.struct({payload: Rsvp}, 'sbotMyRsvpWasAdded')
 
 SbotMyRsvpWasAdded.prototype.update = function(model) {
-  const newRsvp = {...this.payload}
+  const newRsvp = this.payload
   const rsvpIndex = model.rsvps.findIndex(function(rsvp) {
     return rsvp.link == newRsvp.link 
   })
+
   if(rsvpIndex >= 0){
-    const newRsvps = [...model.rsvps] 
-    newRsvps[rsvpIndex] = newRsvp
-    return {model: { ...model,
-      rsvps: newRsvps
-    }}
+    return {
+      model: Model.update(model, {
+        rsvps: {$splice: [[rsvpIndex, 1, this.payload]]}
+      })
+    }
   } else {
-    return {model: { ...model,
-      rsvps: model.rsvps.concat([this.payload])
-    }}
+    return {
+      model: Model.update(model, {
+        rsvps: {$push: [this.payload]}
+      })
+    } 
   }
 }
 
