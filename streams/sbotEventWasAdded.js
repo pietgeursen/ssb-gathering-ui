@@ -1,10 +1,11 @@
 import {pull} from 'inu'
 import SbotEventWasAddedAction from '../actions/sbotEventWasAdded'
+import Event from '../models/event'
 
 function sbotFutureEventWasAdded(client){
   return pull(
     client.findFutureEvents(),
-    pull.map((event) => SbotEventWasAddedAction({payload: event}))
+    pull.map((event) => new SbotEventWasAddedAction({payload: Event(event)}))
   )
 }
 

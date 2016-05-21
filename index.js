@@ -11,29 +11,33 @@ import SbotEventAdded from './actions/sbotEventWasAdded'
 import SbotMyRsvpWasAdded from './actions/sbotMyRsvpWasAdded'
 import UiDidRsvp from './actions/uiDidRsvp'
 
+import Rsvps from './models/rsvps'
+import Events from './models/events'
+import Model from './models/model'
 
 const Action = t.union([SbotEventAdded, SbotMyRsvpWasAdded, UiDidRsvp ], 'Action')
 
 const State = t.struct({
-  model: t.Object,
+  model: Model,
   effect: t.maybe(t.Object)
 }, 'State')
 
 const app = {
 
   init: function(){
-    return {
-      model: {
-        events: [],
-        rsvps: [],
+    return State({
+      model: Model({
+        events: Events([]),
+        rsvps: Rsvps([]),
         url: '/'
-      },
+      }),
       effect: {
         type: 'INIT'
-      }
-  }},
+      }})
+      },
 
   update: function(model, event){
+    debugger
     return State(Action(event).update(model, event))
   },
 
@@ -49,14 +53,14 @@ const app = {
       case "INIT": 
         return actionsStream(client) 
       case "SCHEDULE_RSVP":
-        client.publish(Rsvp(effect.id, effect.status), function(err, res) { })
+        client.publish(RsvpMsg(effect.id, effect.status), function(err, res) { })
         return pull.empty()
     }
     return pull.empty()
   }
 }
 
-function Rsvp(id, vote){
+function RsvpMsg(id, vote){
   return { type: 'rsvp', vote: { link: id, value: vote } } 
 }
 

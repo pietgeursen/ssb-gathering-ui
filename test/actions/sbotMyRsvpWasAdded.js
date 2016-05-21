@@ -6,7 +6,7 @@ import Model from '../../models/model'
 
 
 test('if rsvp link is new, push new rsvp into rsvps', function(t) {
-  const model = Model({rsvps: Rsvps([{link: 'dkjfd', vote: 1}])}) 
+  const model = Model({url: '', events: [], rsvps: Rsvps([{link: 'dkjfd', vote: 1}])}) 
   const newRsvp = Rsvp({link:'piet', vote: 0})
   const action = sbotMyRsvpWasAddedAction({payload: newRsvp})
 
@@ -16,7 +16,7 @@ test('if rsvp link is new, push new rsvp into rsvps', function(t) {
 })
 
 test('if rsvp link already exists, replace old rsvp', function(t) {
-  const model = Model({rsvps: Rsvps([{link: 'dkjfd', vote: 1}])}) 
+  const model = Model({url: '', events: [], rsvps: Rsvps([{link: 'dkjfd', vote: 1}])}) 
   const newRsvp = Rsvp({link:'dkjfd', vote: 0})
   const action = sbotMyRsvpWasAddedAction({payload: newRsvp})
 

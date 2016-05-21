@@ -5,6 +5,7 @@ const prefix = sf('./event.css')
 import classNames from 'classnames'
 import ActiveButton from './activeButton'
 import UiDidRsvp from '../actions/uiDidRsvp'
+import Rsvp from '../models/rsvp'
 
 function Event (model, dispatch){
     const event = model.event
