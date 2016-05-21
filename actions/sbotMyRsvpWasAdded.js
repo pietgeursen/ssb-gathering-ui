@@ -3,7 +3,7 @@ import t from 'tcomb'
 const SbotMyRsvpWasAdded = t.struct({payload: t.Object}, 'sbotMyRsvpWasAdded')
 
 SbotMyRsvpWasAdded.prototype.update = function(model) {
-  const newRsvp = this.payload
+  const newRsvp = {...this.payload}
   const rsvpIndex = model.rsvps.findIndex(function(rsvp) {
     return rsvp.link == newRsvp.link 
   })
