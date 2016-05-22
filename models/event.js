@@ -4,7 +4,7 @@ const Event = t.struct({
   author: t.String,
   id: t.String,
   title: t.String,
-  dateTime: t.Date,
+  dateTime: t.String,
   description: t.String,
   imageUrl: t.String,
   location: t.String,

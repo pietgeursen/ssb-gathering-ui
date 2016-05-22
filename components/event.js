@@ -11,9 +11,9 @@ function Event (model, dispatch){
     const event = model.event
     const rsvp = model.rsvp || {}
     const time = moment(event.dateTime).calendar()
-    const going = () => dispatch(UiDidRsvp({payload: {status: 1, id: event.id}}))    
-    const maybe = () => dispatch(UiDidRsvp({payload: {status: 0, id: event.id}}))    
-    const no = () => dispatch(UiDidRsvp({payload: {status: -1, id: event.id}}))    
+    const going = () => dispatch(UiDidRsvp({payload: {value: 1, link: event.id}}))    
+    const maybe = () => dispatch(UiDidRsvp({payload: {value: 0, link: event.id}}))    
+    const no = () => dispatch(UiDidRsvp({payload: {value: -1, link: event.id}}))    
    
     return html` 
       <div class=${classNames([prefix, 'section'])}>  

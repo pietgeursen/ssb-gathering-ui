@@ -10,12 +10,13 @@ import actionsStream from './streams/actionsStream'
 import SbotEventAdded from './actions/sbotEventWasAdded'
 import SbotMyRsvpWasAdded from './actions/sbotMyRsvpWasAdded'
 import UiDidRsvp from './actions/uiDidRsvp'
+import Default from './actions/default'
 
 import Rsvps from './models/rsvps'
 import Events from './models/events'
 import Model from './models/model'
 
-const Action = t.union([SbotEventAdded, SbotMyRsvpWasAdded, UiDidRsvp ], 'Action')
+const Action = t.union([SbotEventAdded, SbotMyRsvpWasAdded, UiDidRsvp, Default ], 'Action')
 
 const State = t.struct({
   model: Model,
@@ -26,18 +27,17 @@ const app = {
 
   init: function(){
     return State({
-      model: Model({
-        events: Events([]),
-        rsvps: Rsvps([]),
+      model: {
+        events: [],
+        rsvps: [],
         url: '/'
-      }),
+      },
       effect: {
         type: 'INIT'
       }})
       },
 
   update: function(model, event){
-    debugger
     return State(Action(event).update(model, event))
   },
 
