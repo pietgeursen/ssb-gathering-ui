@@ -7,7 +7,7 @@
     "start": "budo ./index.js -d --serve bundle.js --live",
     "server": "node server.js",
     "build": "browserify . -o bundle.js -g uglifyify",
-    "test": "tape test/*.js",
+    "test": "browserify test/**/*.js | node | tap-spec",
     "dist": "mkdir -p dist && bash -c 'cp *.{js,html,css} dist'",
     "push": "gh-pages -d dist",
     "deploy": "npm run build && npm run dist && npm run push"
@@ -43,7 +43,7 @@
     "pull-ws-server": "^1.8.0",
     "scuttlebot": "^8.1.0",
     "ssb-msg-schemas": "^6.2.1",
-    "tcomb": "^3.0.0"
+    "tcomb": "^3.1.0"
   },
   "devDependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.6.5",

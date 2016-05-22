@@ -1,20 +1,32 @@
 import {start, pull, html} from 'inu'
 import ready from 'domready'
+import t from 'tcomb'
 import SSBClient from './ws-client'
 import api from './api'
 import Router from './components/router'
 const client = SSBClient(api)
 
 import actionsStream from './streams/actionsStream'
+import SbotEventAdded from './actions/sbotEventWasAdded'
+import SbotMyRsvpWasAdded from './actions/sbotMyRsvpWasAdded'
+import UiDidRsvp from './actions/uiDidRsvp'
+import Default from './actions/default'
 
-function Rsvp(id, vote){
-  return { type: 'rsvp', vote: { link: id, value: vote } } 
-}
+import Rsvps from './models/rsvps'
+import Events from './models/events'
+import Model from './models/model'
+
+const Action = t.union([SbotEventAdded, SbotMyRsvpWasAdded, UiDidRsvp, Default ], 'Action')
+
+const State = t.struct({
+  model: Model,
+  effect: t.maybe(t.Object)
+}, 'State')
 
 const app = {
 
   init: function(){
-    return {
+    return State({
       model: {
         events: [],
         rsvps: [],
@@ -22,38 +34,11 @@ const app = {
       },
       effect: {
         type: 'INIT'
-      }
-  }},
+      }})
+      },
 
   update: function(model, event){
-    if(!event) return {model}
-    switch(event.type){
-      case "SBOT_MY_RSVP_WAS_ADDED":
-        const newRsvp = event.payload
-        const rsvpIndex = model.rsvps.findIndex(function(rsvp) {
-          return rsvp.link == newRsvp.link 
-        })
-        if(rsvpIndex >= 0){
-          const newRsvps = [...model.rsvps] 
-          newRsvps[rsvpIndex] = newRsvp
-          return {model: { ...model,
-            rsvps: newRsvps
-          }}
-        } else {
-          return {model: { ...model,
-            rsvps: model.rsvps.concat([event.payload])
-          }}
-        }
-      case "SBOT_EVENT_WAS_ADDED":
-        return {model: { ...model,
-          events: model.events.concat([event.payload])
-        }}
-      case "UI_URL_DID_CHANGE": 
-        return {model: {...model, url: event.url}} 
-      case "UI_DID_RSVP":
-        return {model: model, effect: {type: "SCHEDULE_RSVP", id: event.id, status: event.status}}
-    }
-    return {model}
+    return State(Action(event).update(model, event))
   },
 
   view: (model, dispatch) => {
@@ -68,11 +53,15 @@ const app = {
       case "INIT": 
         return actionsStream(client) 
       case "SCHEDULE_RSVP":
-        client.publish(Rsvp(effect.id, effect.status), function(err, res) { })
+        client.publish(RsvpMsg(effect.id, effect.status), function(err, res) { })
         return pull.empty()
     }
     return pull.empty()
   }
+}
+
+function RsvpMsg(id, vote){
+  return { type: 'rsvp', vote: { link: id, value: vote } } 
 }
 
 ready(function(){
