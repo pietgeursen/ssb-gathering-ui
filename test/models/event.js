@@ -1,5 +1,6 @@
 import test from 'tape'
 import Event from '../../models/event'
+import validEvent from '../../util/validEvent'
 
 test('throws when making an empty event', function(t) {
   t.throws(()=>Event({}))
@@ -7,19 +8,8 @@ test('throws when making an empty event', function(t) {
 })
 
 test('creates a new event with the correct object', function(t) {
-  const ev ={
-    title: "",
-    description: "",
-    location: "",
-    author: "",
-    id: "",
-    dateTime: "", 
-    imageUrl: "",
-    type: ""
-  }
-
-  const newEvent = Event(ev)
-  t.ok(newEvent)
+  const newEvent = Event(validEvent)
+  t.ok(Event.is(newEvent), 'created event is the Event type')
   t.end()
 })
 
