@@ -6,9 +6,7 @@ function sbotMyRsvpWasAdded(client){
   return pull(
     client.myRsvps(),
     pull.map((rsvp) => {
-      const action = SbotMyRsvpWasAddedAction({payload: Rsvp(rsvp)})
-      console.log(action);
-      return action
+      return SbotMyRsvpWasAddedAction({payload: rsvp})
     })
   )
 }
