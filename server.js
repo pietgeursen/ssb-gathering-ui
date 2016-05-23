@@ -8,8 +8,8 @@ var WSServer = require('./ws-server');
 var ws = require('pull-ws-server')
 
 //temporary seed of db for dev.
-var seedEvents = require('./util/seedEvents');
-for(event of seedEvents){
+var seedGatherings = require('./util/seedGatherings');
+for(event of seedGatherings){
   sbot.events.create(event, function(err, data) {
     console.log(err);
   })

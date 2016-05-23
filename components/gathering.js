@@ -1,31 +1,31 @@
 import {html} from 'inu'
 import moment from 'moment'
 const sf = require('sheetify')
-const prefix = sf('./event.css')
+const prefix = sf('./gathering.css')
 import classNames from 'classnames'
 import ActiveButton from './activeButton'
 import UiDidRsvp from '../actions/uiDidRsvp'
 import Rsvp from '../models/rsvp'
 
-function Event (model, dispatch){
-    const event = model.event
+function Gathering (model, dispatch){
+    const gathering = model.gathering
     const rsvp = model.rsvp || {}
-    const time = moment(event.dateTime).calendar()
-    const going = () => dispatch(UiDidRsvp({payload: {value: 1, link: event.id}}))    
-    const maybe = () => dispatch(UiDidRsvp({payload: {value: 0, link: event.id}}))    
-    const no = () => dispatch(UiDidRsvp({payload: {value: -1, link: event.id}}))    
+    const time = moment(gathering.dateTime).calendar()
+    const going = () => dispatch(UiDidRsvp({payload: {value: 1, link: gathering.id}}))    
+    const maybe = () => dispatch(UiDidRsvp({payload: {value: 0, link: gathering.id}}))    
+    const no = () => dispatch(UiDidRsvp({payload: {value: -1, link: gathering.id}}))    
    
     return html` 
       <div class=${classNames([prefix, 'section'])}>  
         <div class='details row'>  
           <div class='pic four columns'>  
-            <img src=${event.imageUrl} />
+            <img src=${gathering.imageUrl} />
           </div>  
           <div class='info eight columns'>  
-            <h3>${event.title}</h3>
+            <h3>${gathering.title}</h3>
             <h4>${time}</h4>
-            <h4>${event.location}</h4>
-            <h4>${event.author}</h4>
+            <h4>${gathering.location}</h4>
+            <h4>${gathering.author}</h4>
           </div>  
         </div>  
         <div class='respond-buttons row'>  
@@ -44,4 +44,4 @@ function Event (model, dispatch){
 
 
 
-export default Event
+export default Gathering

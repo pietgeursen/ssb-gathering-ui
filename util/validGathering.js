@@ -6,5 +6,5 @@ module.exports = {
   author: "",
   id: "",
   imageUrl: "",
-  type: ""
+  type: "gathering"
 }

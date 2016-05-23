@@ -1,6 +1,6 @@
 import t from 'tcomb'
 
-const Event = t.struct({
+const Gathering = t.struct({
   author: t.String,
   id: t.String,
   title: t.String,
@@ -10,6 +10,6 @@ const Event = t.struct({
   location: t.String,
   title: t.String,
   type: t.String,
-}, 'Event')
+}, 'Gathering')
 
-export default Event
+export default Gathering

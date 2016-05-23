@@ -7,10 +7,10 @@ module.exports = function (sbot) {
   return function (stream) {
     // create rpc object
     var rpc = muxrpc({}, api, serialize)({
-      findEvents: sbot.events.find,
-      findFutureEvents: sbot.events.future,
-      createEvent: sbot.events.create,
-      myRsvps: sbot.events.myRsvps,
+      findGatherings: sbot.gatherings.find,
+      findFutureGatherings: sbot.gatherings.future,
+      createGathering: sbot.gatherings.create,
+      myRsvps: sbot.gatherings.myRsvps,
 			publish: sbot.publish
     })
 

@@ -9,7 +9,7 @@ function Nav(){
           <div class='container'> 
             <ul class='navbar-list'>
               <li class='navbar-item'>
-                <a class='navbar-link' href='/'>Events</a>
+                <a class='navbar-link' href='/'>Gathering</a>
               </li>
             </ul>
           </div>
