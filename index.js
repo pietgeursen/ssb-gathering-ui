@@ -10,13 +10,14 @@ import actionsStream from './streams/actionsStream'
 import SbotGatheringAdded from './actions/sbotGatheringWasAdded'
 import SbotMyRsvpWasAdded from './actions/sbotMyRsvpWasAdded'
 import UiDidRsvp from './actions/uiDidRsvp'
+import UiUrlDidChangeAction from './actions/uiUrlDidChange'
 import Default from './actions/default'
 
 import Rsvps from './models/rsvps'
 import Gatherings from './models/gatherings'
 import Model from './models/model'
 
-const Action = t.union([SbotGatheringAdded, SbotMyRsvpWasAdded, UiDidRsvp, Default ], 'Action')
+const Action = t.union([SbotGatheringAdded, SbotMyRsvpWasAdded, UiDidRsvp, UiUrlDidChangeAction], 'Action')
 
 const State = t.struct({
   model: Model,
@@ -37,8 +38,9 @@ const app = {
       }})
       },
 
-  update: function(model, gathering){
-    return State(Action(gathering).update(model, gathering))
+  update: function(model, action){
+    console.log(model, action);
+    return State(Action(action).update(model, action))
   },
 
   view: (model, dispatch) => {

@@ -53,6 +53,7 @@
     "budo": "^8.2.0",
     "gh-pages": "^0.11.0",
     "sheetify": "^5.0.0",
+    "smokestack": "^3.4.1",
     "ssb-keys": "^5.0.1",
     "tap-spec": "^4.1.1",
     "tape": "^4.5.1",
