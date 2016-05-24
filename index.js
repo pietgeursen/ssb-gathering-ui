@@ -13,7 +13,7 @@ import UiDidRsvp from './actions/uiDidRsvp'
 import Default from './actions/default'
 
 import Rsvps from './models/rsvps'
-import Gatherings from './models/events'
+import Gatherings from './models/gatherings'
 import Model from './models/model'
 
 const Action = t.union([SbotGatheringAdded, SbotMyRsvpWasAdded, UiDidRsvp, Default ], 'Action')
@@ -28,7 +28,7 @@ const app = {
   init: function(){
     return State({
       model: {
-        events: [],
+        gatherings: [],
         rsvps: [],
         url: '/'
       },
@@ -37,8 +37,8 @@ const app = {
       }})
       },
 
-  update: function(model, event){
-    return State(Action(event).update(model, event))
+  update: function(model, gathering){
+    return State(Action(gathering).update(model, gathering))
   },
 
   view: (model, dispatch) => {

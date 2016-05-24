@@ -1,5 +1,5 @@
 var createSbot = require('scuttlebot')
-  .use(require('../sbot-events/'))
+  .use(require('../sbot-gatherings/'))
 
 var ssbKeys = require('ssb-keys')
 var sbot = createSbot({keys: ssbKeys.generate(), temp: 'test-fun'})
@@ -9,8 +9,8 @@ var ws = require('pull-ws-server')
 
 //temporary seed of db for dev.
 var seedGatherings = require('./util/seedGatherings');
-for(event of seedGatherings){
-  sbot.events.create(event, function(err, data) {
+for(gathering of seedGatherings){
+  sbot.gatherings.create(gathering, function(err, data) {
     console.log(err);
   })
 }

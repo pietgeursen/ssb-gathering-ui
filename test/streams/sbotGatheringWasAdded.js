@@ -1,7 +1,7 @@
 import test from 'tape'
 import {pull} from 'inu'
 import sbotFutureGatheringWasAdded from '../../streams/sbotGatheringWasAdded'
-import Gathering from '../../models/event'
+import Gathering from '../../models/gathering'
 import validGathering from '../../util/validGathering'
 import sbotFutureGatheringWasAddedAction from '../../actions/sbotGatheringWasAdded'
 
