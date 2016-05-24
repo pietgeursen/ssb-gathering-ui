@@ -2,10 +2,10 @@ import {html} from 'inu'
 const sf = require('sheetify')
 const prefix = sf('./create.css')
 
-function postEvent(title, location, description, date, time, mentions, imageUrl) {
+function postGathering(title, location, description, date, time, mentions, imageUrl) {
  const dateTime = new Date(date + "T" + time)
  return {
-   type: 'event',
+   type: 'gathering',
    dateTime,
    title,
    location,
@@ -17,10 +17,10 @@ function postEvent(title, location, description, date, time, mentions, imageUrl)
 
 
 function onSubmit(form) {
-  const event = postEvent(form.name, form.location, form.desctiption, form.date, form.time)
+  const gathering = postGathering(form.name, form.location, form.desctiption, form.date, form.time)
   return {
     type: "DID_SUBMIT_NEW_EVENT",
-    event
+    gathering
   }  
 }
 
@@ -31,7 +31,7 @@ function render ({props, local}) {
       <div class='section'>
         <h2>Create a new event</h2>
         <Form validate={() => {return {valid:true}}} onSubmit={onSubmit}>
-          <label for="eventNameInput">Event Name</label>
+          <label for="eventNameInput">Gathering Name</label>
           <input name='name' class='u-full-width' type="text" placeholder="My sweet event" id="eventNameInput" />
           <div class='row'>
             <div class='six columns'>
@@ -45,7 +45,7 @@ function render ({props, local}) {
           </div>
           <label for="eventLocationInput">Location</label>
           <input name="location" class='u-full-width' type="text" placeholder="My place" id="eventLocationInput" />
-          <label for="eventDescriptionInput">Event Description</label>
+          <label for="eventDescriptionInput">Gathering Description</label>
           <textarea name="description" class='u-full-width' placeholder="Fun times" id="eventDescriptionInput" ></textarea>
           <input class='button-primary' type="submit">Create</input>
         </Form>

@@ -1,7 +1,7 @@
 import {html} from 'inu'
 const sf = require('sheetify')
 const prefix = sf('./app.css')
-import Event from './event'
+import Gathering from './gathering'
 
 function App (model, dispatch) {
       return html`<div class=${prefix}>
@@ -14,19 +14,18 @@ function App (model, dispatch) {
             <a class='button button-primary create-button' href='/#/create'>Create</a> 
           </div>
           <div>
-            ${model.events.map(function(event) {
+            ${model.gatherings.map(function(gathering) {
               const rsvp = model.rsvps.find(function(rsvp) {
-                return rsvp.link == event.id 
+                return rsvp.link == gathering.id 
               })
-              const eventAndRsvp = {
-                event: event,
+              const gatheringAndRsvp = {
+                gathering: gathering,
                 rsvp: rsvp 
               }
-              return Event(eventAndRsvp, dispatch) 
+              return Gathering(gatheringAndRsvp, dispatch) 
             })}
           </div>
       </div>`
   }
-
 
 export default App

@@ -1,12 +1,12 @@
 import pullMany from 'pull-many'
 
-import sbotEventWasAdded from './sbotEventWasAdded' 
+import sbotGatheringWasAdded from './sbotGatheringWasAdded' 
 import sbotMyRsvpWasAdded from './sbotMyRsvpWasAdded'
 import uiUrlDidChange from './uiUrlDidChange'
 
 function actionsStream(client){
   return pullMany([
-    sbotEventWasAdded(client), 
+    sbotGatheringWasAdded(client), 
     sbotMyRsvpWasAdded(client), 
     uiUrlDidChange()
   ])

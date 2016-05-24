@@ -7,16 +7,16 @@ import Router from './components/router'
 const client = SSBClient(api)
 
 import actionsStream from './streams/actionsStream'
-import SbotEventAdded from './actions/sbotEventWasAdded'
+import SbotGatheringAdded from './actions/sbotGatheringWasAdded'
 import SbotMyRsvpWasAdded from './actions/sbotMyRsvpWasAdded'
 import UiDidRsvp from './actions/uiDidRsvp'
 import Default from './actions/default'
 
 import Rsvps from './models/rsvps'
-import Events from './models/events'
+import Gatherings from './models/gatherings'
 import Model from './models/model'
 
-const Action = t.union([SbotEventAdded, SbotMyRsvpWasAdded, UiDidRsvp, Default ], 'Action')
+const Action = t.union([SbotGatheringAdded, SbotMyRsvpWasAdded, UiDidRsvp, Default ], 'Action')
 
 const State = t.struct({
   model: Model,
@@ -28,7 +28,7 @@ const app = {
   init: function(){
     return State({
       model: {
-        events: [],
+        gatherings: [],
         rsvps: [],
         url: '/'
       },
@@ -37,8 +37,8 @@ const app = {
       }})
       },
 
-  update: function(model, event){
-    return State(Action(event).update(model, event))
+  update: function(model, gathering){
+    return State(Action(gathering).update(model, gathering))
   },
 
   view: (model, dispatch) => {

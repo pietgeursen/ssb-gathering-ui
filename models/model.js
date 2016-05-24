@@ -1,11 +1,11 @@
 import t from 'tcomb'
 import Rsvps from './rsvps'
-import Events from './events'
+import Gatherings from './gatherings'
 
 t.struct.strict = true
 const Model = t.struct({
   rsvps: Rsvps,
-  events: Events,
+  gatherings: Gatherings,
   url: t.String
 }, 'Model')
 
