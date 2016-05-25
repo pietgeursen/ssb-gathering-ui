@@ -4,7 +4,7 @@ import sbotGatheringWasAdded from './sbotGatheringWasAdded'
 import sbotMyRsvpWasAdded from './sbotMyRsvpWasAdded'
 import uiUrlDidChange from './uiUrlDidChange'
 
-function actionsStream(client){
+function Streams(client){
   return pullMany([
     sbotGatheringWasAdded(client), 
     sbotMyRsvpWasAdded(client), 
@@ -12,4 +12,4 @@ function actionsStream(client){
   ])
 }
 
-export default actionsStream
+export default Streams
