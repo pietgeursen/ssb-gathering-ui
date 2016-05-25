@@ -7,6 +7,9 @@ import Router from './components/router'
 const client = SSBClient(api)
 
 import actionsStream from './streams/actionsStream'
+import Effect from './effects/effects'
+import ScheduleInit from './effects/scheduleInit'
+import ScheduleRsvp from './effects/scheduleRsvp'
 import SbotGatheringAdded from './actions/sbotGatheringWasAdded'
 import SbotMyRsvpWasAdded from './actions/sbotMyRsvpWasAdded'
 import UiDidRsvp from './actions/uiDidRsvp'
@@ -33,10 +36,8 @@ const app = {
         rsvps: [],
         url: '/'
       },
-      effect: {
-        type: 'INIT'
-      }})
-      },
+      effect: ScheduleInit({})
+      })},
 
   update: function(model, action){
     console.log(model, action);
@@ -51,20 +52,10 @@ const app = {
   },
 
   run: function(effect){
-    switch(effect.type){
-      case "INIT": 
-        return actionsStream(client) 
-      case "SCHEDULE_RSVP":
-        client.publish(RsvpMsg(effect.id, effect.status), function(err, res) { })
-        return pull.empty()
-    }
-    return pull.empty()
+    return Effect(effect).run(client)
   }
 }
 
-function RsvpMsg(id, vote){
-  return { type: 'rsvp', vote: { link: id, value: vote } } 
-}
 
 ready(function(){
   const main = document.querySelector('main')
