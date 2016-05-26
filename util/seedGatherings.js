@@ -15,6 +15,5 @@ module.exports = [
     description: "Art for hacking's sake",
     location: "Enspiral space",
     dateTime: moment().add(1, 'days').toDate(),
-    status: 0
   }
 ]

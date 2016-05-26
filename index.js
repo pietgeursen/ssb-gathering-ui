@@ -1,21 +1,21 @@
 import {start, pull, html} from 'inu'
 import ready from 'domready'
-import t from 'tcomb'
+
 import SSBClient from './ws-client'
 import api from './api'
-import Router from './components/router'
 const client = SSBClient(api)
 
 import Effect from './effects/effects'
 import Action from './actions/actions'
 import State, {initialState} from './state/state'
 
+import Router from './components/router'
+
 const app = {
 
   init: initialState,
 
   update: function(model, action){
-    console.log(model, action);
     return State(Action(action).update(model, action))
   },
 
@@ -31,10 +31,10 @@ const app = {
   }
 }
 
+const {views} = start(app)
 
 ready(function(){
   const main = document.querySelector('main')
-  const {views} = start(app)
   
   pull(
     views(),
