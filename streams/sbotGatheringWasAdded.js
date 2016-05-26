@@ -5,7 +5,10 @@ function sbotFutureGatheringWasAdded(client){
   return pull(
     client.findFutureGatherings(),
     pull.map((gathering) => {
-      return SbotGatheringWasAddedAction({payload: gathering})
+      console.log('gathering: ', gathering);
+      var action = SbotGatheringWasAddedAction(gathering)
+      console.log('action: ',action);
+      return action
     })
   )
 }

@@ -11,9 +11,9 @@ function Gathering (model, dispatch){
     const gathering = model.gathering
     const rsvp = model.rsvp || {}
     const time = moment(gathering.dateTime).calendar()
-    const going = () => dispatch(UiDidRsvp({payload: {value: 1, link: gathering.id}}))    
-    const maybe = () => dispatch(UiDidRsvp({payload: {value: 0, link: gathering.id}}))    
-    const no = () => dispatch(UiDidRsvp({payload: {value: -1, link: gathering.id}}))    
+    const going = () => dispatch(UiDidRsvp({value: 1, link: gathering.id}))    
+    const maybe = () => dispatch(UiDidRsvp({value: 0, link: gathering.id}))    
+    const no = () => dispatch(UiDidRsvp({value: -1, link: gathering.id}))    
    
     return html` 
       <div class=${classNames([prefix, 'section'])}>  
