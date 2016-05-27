@@ -12,7 +12,7 @@ function RsvpButtons(model, dispatch) {
   const maybe = () => dispatch(UiDidRsvp({value: 0, link: gathering.id}))    
   const no = () => dispatch(UiDidRsvp({value: -1, link: gathering.id}))    
  return html`
-   <div class='respond-buttons row'>  
+   <div class='respond-buttons row ${prefix}'>  
     <div class='four columns'>
       ${ActiveButton( {text: 'GOING', active: rsvp.value == 1, click: going}, dispatch) } 
     </div>
