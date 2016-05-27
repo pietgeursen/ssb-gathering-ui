@@ -1,19 +1,14 @@
 import {html} from 'inu'
 import moment from 'moment'
 const sf = require('sheetify')
-const prefix = sf('./gathering.css')
 import classNames from 'classnames'
-import ActiveButton from './activeButton'
-import UiDidRsvp from '../actions/uiDidRsvp'
-import Rsvp from '../models/rsvp'
+const prefix = sf('./gathering.css')
+import RsvpButtons from './rsvpButtons'
 
 function Gathering (model, dispatch){
     const gathering = model.gathering
-    const rsvp = model.rsvp || {}
+		const rsvp = model.rsvp || {}
     const time = moment(gathering.dateTime).calendar()
-    const going = () => dispatch(UiDidRsvp({value: 1, link: gathering.id}))    
-    const maybe = () => dispatch(UiDidRsvp({value: 0, link: gathering.id}))    
-    const no = () => dispatch(UiDidRsvp({value: -1, link: gathering.id}))    
    
     return html` 
       <div class=${classNames([prefix, 'section'])}>  
@@ -28,17 +23,7 @@ function Gathering (model, dispatch){
             <h4>${gathering.author}</h4>
           </div>  
         </div>  
-        <div class='respond-buttons row'>  
-          <div class='four columns'>
-            ${ActiveButton( {text: 'GOING', active: rsvp.value == 1, click: going}, dispatch) } 
-          </div>
-          <div class='four columns'>
-            ${ActiveButton( {text: 'MAYBE', active: rsvp.value == 0, click: maybe}, dispatch) } 
-          </div>
-          <div class='four columns'>
-            ${ActiveButton( {text: 'NO', active: rsvp.value == -1, click: no}, dispatch) } 
-          </div>
-        </div>  
+				${RsvpButtons(model, dispatch)}
       </div>`  
   }
 
