@@ -2,7 +2,7 @@
 
 # Secure Scuttlebutt Gatherings 
 
-An app to have FB style events on patchwork. Uses inu, pull-streams, mux-rpc, sheetify, tcomb and other fun stuff. Still a work in progress.
+An app to have FB style events on [patchwork](https://github.com/ssbc/patchwork). Uses [inu](https://github.com/ahdinosaur/inu), pull-streams, mux-rpc, sheetify, tcomb and other fun stuff. Still a work in progress.
 
 ### install
 
