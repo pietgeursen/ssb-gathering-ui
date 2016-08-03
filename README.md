@@ -2,13 +2,13 @@
 
 # Secure Scuttlebutt Gatherings 
 
-An app to have FB style events on [patchwork](https://github.com/ssbc/patchwork). Uses [inu](https://github.com/ahdinosaur/inu), pull-streams, mux-rpc, sheetify, tcomb and other fun stuff. Still a work in progress.
+An app to have FB style events on [patchwork](https://github.com/ssbc/patchwork). Uses [inu](https://github.com/ahdinosaur/inu), [pull-streams](https://github.com/pull-stream/pull-stream), [mux-rpc](https://github.com/ssbc/muxrpc), [sheetify](https://github.com/stackcss/sheetify), [tcomb](https://github.com/gcanti/tcomb) and other fun stuff. Still a work in progress.
 
 ### install
 
 ```
-git clone https://github.com/pietgeursen/ssb-gather-ui
-cd  ssb-gather-ui
+git clone https://github.com/pietgeursen/ssb-gathering-ui
+cd  ssb-gathering-ui
 npm install
 ```
 
