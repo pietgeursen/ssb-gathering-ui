@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/pietgeursen/",
   "dependencies": {
+    "@f/serialize-form": "^1.0.0",
     "catch-links": "^2.0.1",
     "classnames": "^2.2.5",
     "domready": "^1.0.8",
@@ -45,7 +46,8 @@
     "sbot-gatherings": "github:pietgeursen/sbot-gathering",
     "scuttlebot": "^8.1.0",
     "ssb-msg-schemas": "^6.2.1",
-    "tcomb": "^3.1.0"
+    "tcomb": "^3.2.10",
+    "tcomb-validation": "^3.2.1"
   },
   "devDependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.6.5",
