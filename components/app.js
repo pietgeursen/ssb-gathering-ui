@@ -2,6 +2,7 @@ import {html} from 'inu'
 const sf = require('sheetify')
 const prefix = sf('./app.css')
 import Gathering from './gathering'
+import rsvpToGatheringSelector from '../selectors/rsvpToGatheringSelector'
 
 function App (model, dispatch) {
       return html`<div class=${prefix}>
@@ -15,12 +16,10 @@ function App (model, dispatch) {
           </div>
           <div>
             ${model.gatherings.map(function(gathering) {
-              const rsvp = model.rsvps.find(function(rsvp) {
-                return rsvp.link == gathering.id 
-              })
+              const rsvp = rsvpToGatheringSelector(gathering)(model)
               const gatheringAndRsvp = {
-                gathering: gathering,
-                rsvp: rsvp 
+                gathering,
+                rsvp 
               }
               return Gathering(gatheringAndRsvp, dispatch) 
             })}
