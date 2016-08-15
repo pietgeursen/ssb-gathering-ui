@@ -4,6 +4,7 @@ const sf = require('sheetify')
 
 import Gathering from './gathering'
 import rsvpToGatheringSelector from '../selectors/rsvpToGatheringSelector'
+import commentsOnGatheringSelector from '../selectors/commentsOnGatheringSelector'
 const prefix = sf('./showGathering.css')
 
 function ShowGathering(id){
@@ -12,6 +13,7 @@ function ShowGathering(id){
      return gathering.id === atob(id) 
     })
     const rsvp = rsvpToGatheringSelector(gathering)(model)
+    const comments = commentsOnGatheringSelector(gathering)(model) 
     return ( html`
       <div class=${classNames([prefix, "section"])}>
         ${Gathering({gathering, rsvp}, dispatch)}
@@ -25,8 +27,13 @@ function ShowGathering(id){
           <button>Post</button>
         </div>
         <div class="comments section"> 
-          <div class="comment"> 
-          </div> 
+          ${comments.map(function(comment) {
+            return( html`
+            <div class="comment"> 
+              ${comment.text} 
+            </div>`
+            )
+          })}
         </div>
       </div>`
     )
