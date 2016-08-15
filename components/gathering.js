@@ -7,6 +7,7 @@ import RsvpButtons from './rsvpButtons'
 
 function Gathering (model, dispatch){
     const gathering = model.gathering
+
 		const rsvp = model.rsvp || {}
     const time = moment(gathering.dateTime).calendar()
    
@@ -17,14 +18,16 @@ function Gathering (model, dispatch){
             <img src=${gathering.imageUrl} />
           </div>  
           <div class='info eight columns'>  
-            <h3>${gathering.title}</h3>
+            <a href="/#/gathering/${btoa(gathering.id)}">
+              <h3>${gathering.title}</h3>
+            </a>
             <h4>${time}</h4>
             <h4>${gathering.location}</h4>
             <h4>${gathering.author}</h4>
           </div>  
         </div>  
-				${RsvpButtons(model, dispatch)}
-      </div>`  
+        ${RsvpButtons(model, dispatch)}
+      </div>`
   }
 
 

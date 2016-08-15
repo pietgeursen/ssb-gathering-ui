@@ -16,7 +16,8 @@ const app = {
   init: initialState,
 
   update: function(model, action){
-    return State(Action(action).update(model, action))
+   const newState = State(Action(action).update(model, action))
+   return newState
   },
 
   view: (model, dispatch) => {
