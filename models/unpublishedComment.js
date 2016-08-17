@@ -1,10 +1,10 @@
 import t from 'tcomb'
 
-const Comment = t.struct({
-  text: t.String,
+const UnpublishedComment = t.struct({
+  text: t.maybe(t.String),
   mentions: t.String
-}, 'Comment')
+}, 'UnpublishedComment')
 
-export default Comment
+export default UnpublishedComment
 
 

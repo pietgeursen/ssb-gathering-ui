@@ -7,7 +7,7 @@ import Model from '../../models/model'
 
 
 test('push new gathering into gatherings', function(t) {
-  const model = Model({url: '', rsvps: [], gatherings: Gatherings([validGathering])}) 
+  const model = Model({url: '', rsvps: [], comments: [], gatherings: Gatherings([validGathering])}) 
   const newGathering = Gathering(validGathering)
   const action = sbotGatheringWasAdded(newGathering)
 

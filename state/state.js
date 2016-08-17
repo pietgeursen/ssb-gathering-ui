@@ -15,6 +15,7 @@ export function initialState(){
     model: Model({
       gatherings: [],
       rsvps: [],
+      comments: [],
       url: '/'
     }),
     effect: ScheduleInit({})

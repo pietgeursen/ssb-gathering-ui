@@ -4,7 +4,7 @@ import Model from '../../models/model'
 
 
 test('push new url into model.url', function(t) {
-  const model = Model({url: '/', rsvps: [], gatherings: []}) 
+  const model = Model({url: '/', comments: [], rsvps: [], gatherings: []}) 
   const newUrl = "/weee"
   const action = UiUrlDidChangeAction({payload: newUrl})
 

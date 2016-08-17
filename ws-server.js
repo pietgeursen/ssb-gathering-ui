@@ -9,6 +9,7 @@ module.exports = function (sbot) {
     var rpc = muxrpc({}, api, serialize)({
       findGatherings: sbot.gatherings.find,
       findFutureGatherings: sbot.gatherings.future,
+      findCommentsOnGatherings: sbot.gatherings.commentsOnGatherings,
       createGathering: sbot.gatherings.create,
       myRsvps: sbot.gatherings.myRsvps,
 			publish: sbot.publish

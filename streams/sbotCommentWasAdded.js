@@ -1,11 +1,12 @@
 import {pull} from 'inu'
 import SbotCommentWasAddedAction from '../actions/sbotCommentWasAdded'
 
-function sbotCommentWasAdded(client, gatheringId){
+function sbotCommentWasAdded(client){
   return pull(
-    pull.values([{mentions: gatheringId, text: 'derp'}]),
+    client.findCommentsOnGatherings(),
     pull.map((comment) => {
-      return SbotCommentWasAddedAction(comment)
+      console.log('sbot emitted a comment', comment)
+      return SbotCommentWasAddedAction({mentions: comment.content.mentions[0], text: comment.content.text})
     })
   )
 }

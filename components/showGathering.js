@@ -5,6 +5,7 @@ const sf = require('sheetify')
 import Gathering from './gathering'
 import rsvpToGatheringSelector from '../selectors/rsvpToGatheringSelector'
 import commentsOnGatheringSelector from '../selectors/commentsOnGatheringSelector'
+import uiDiDComment from '../actions/uiDidComment'
 const prefix = sf('./showGathering.css')
 
 function ShowGathering(id){
@@ -24,7 +25,7 @@ function ShowGathering(id){
         <div class="add-comment section"> 
           <h2>Write a comment</h2>
           <textarea class="u-full-width" placeholder="Write something..." ></textarea>
-          <button>Post</button>
+          <button onclick=${()=> dispatch(uiDiDComment({mentions: gathering.id, text: 'wee'}))}>Post</button>
         </div>
         <div class="comments section"> 
           ${comments.map(function(comment) {

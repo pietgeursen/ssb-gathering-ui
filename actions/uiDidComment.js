@@ -1,8 +1,8 @@
 import t from 'tcomb'
-import Comment from '../models/comment'
+import UnpublishedComment from '../models/unpublishedComment'
 import ScheduleComment from '../effects/scheduleComment'
 
-const UiDidComment = Comment.extend({}, 'uiDidComment')
+const UiDidComment = UnpublishedComment.extend({}, 'uiDidComment')
 
 UiDidComment.prototype.update = function(model) {
   return {model: model, effect: ScheduleComment(this) }
