@@ -1,12 +1,14 @@
 import {html} from 'inu'
 import classNames from 'classnames'
 const sf = require('sheetify')
+import serialize from '@f/serialize-form'
 
 import Gathering from './gathering'
 import rsvpToGatheringSelector from '../selectors/rsvpToGatheringSelector'
 import commentsOnGatheringSelector from '../selectors/commentsOnGatheringSelector'
 import uiDiDComment from '../actions/uiDidComment'
 const prefix = sf('./showGathering.css')
+
 
 function ShowGathering(id){
   return function(model, dispatch){
@@ -15,6 +17,11 @@ function ShowGathering(id){
     })
     const rsvp = rsvpToGatheringSelector(gathering)(model)
     const comments = commentsOnGatheringSelector(gathering)(model) 
+    const onSubmit = function(e) {
+      e.preventDefault()
+      const form = serialize(e.target)
+      dispatch(uiDiDComment({mentions: gathering.id, text: form.message}))
+    }
     return ( html`
       <div class=${classNames([prefix, "section"])}>
         ${Gathering({gathering, rsvp}, dispatch)}
@@ -22,16 +29,16 @@ function ShowGathering(id){
           <h2>Details</h2>
           <h4>${gathering.description}</h4>
         </div>
-        <div class="add-comment section"> 
+        <form onsubmit=${(e)=> onSubmit(e, dispatch)} class="add-comment section"> 
           <h2>Write a comment</h2>
-          <textarea class="u-full-width" placeholder="Write something..." ></textarea>
-          <button onclick=${()=> dispatch(uiDiDComment({mentions: gathering.id, text: 'wee'}))}>Post</button>
-        </div>
+          <textarea name="message" class="u-full-width" placeholder="Write something..." ></textarea>
+          <button type="submit">Post</button>
+        </form>
         <div class="comments section"> 
-          ${comments.map(function(comment) {
+          ${comments.reverse().map(function(comment) {
             return( html`
             <div class="comment"> 
-              ${comment.text} 
+             <h4>${comment.text}</h4>
             </div>`
             )
           })}

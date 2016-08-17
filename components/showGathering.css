@@ -1,3 +1,7 @@
 .section{
   padding: 3rem;
+  border-bottom: 1px solid #eee;
+}
+.comment{
+  border-bottom: 1px solid #eee;
 }
