@@ -20,6 +20,8 @@ function ShowGathering(id){
     const onSubmit = function(e) {
       e.preventDefault()
       const form = serialize(e.target)
+      const txt = e.target.querySelector('textarea')
+      txt.value = ""
       dispatch(uiDiDComment({mentions: gathering.id, text: form.message}))
     }
     return ( html`
@@ -35,7 +37,7 @@ function ShowGathering(id){
           <button type="submit">Post</button>
         </form>
         <div class="comments section"> 
-          ${comments.reverse().map(function(comment) {
+          ${comments.map(function(comment) {
             return( html`
             <div class="comment"> 
              <h4>${comment.text}</h4>

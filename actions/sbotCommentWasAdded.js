@@ -5,7 +5,7 @@ import Model from '../models/model'
 const SbotCommentWasAdded = Comment.extend({}, 'sbotCommentWasAdded')
 
 SbotCommentWasAdded.prototype.update = function(model) {
-  return {model: Model.update(model, {comments: {$push: [this]}})}
+  return {model: Model.update(model, {comments: {$unshift: [this]}})}
 }
 
 export default SbotCommentWasAdded

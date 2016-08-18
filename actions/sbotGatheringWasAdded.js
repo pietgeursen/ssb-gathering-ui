@@ -7,8 +7,8 @@ const SbotGatheringAdded = Gathering.extend({}, 'sbotGatheringWasAdded')
 
 SbotGatheringAdded.prototype.update = function(model) {
   
-	return State({
-    model: Model.update(model, {gatherings: {$push: [this]}}),
+return State({
+model: Model.update(model, {gatherings: {$unshift: [this]}}),
   })
 }
 

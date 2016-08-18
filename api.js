@@ -4,7 +4,6 @@ module.exports = {
   findCommentsOnGatherings: 'source',
   createGathering: 'async',
   myRsvps: 'source',
-	publish: 'async'
+  publish: 'async',
+  findAuthorNameOfMessage: 'async'
 }
-
-
