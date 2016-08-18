@@ -1,4 +1,4 @@
-import {html} from 'inu'
+import { html } from 'inu'
 import classNames from 'classnames'
 const sf = require('sheetify')
 import serialize from '@f/serialize-form'
@@ -9,19 +9,18 @@ import commentsOnGatheringSelector from '../selectors/commentsOnGatheringSelecto
 import uiDiDComment from '../actions/uiDidComment'
 const prefix = sf('./showGathering.css')
 
-
-function ShowGathering(id){
-  return function(model, dispatch){
-    const gathering = model.gatherings.find(function(gathering) {
-     return gathering.id === atob(id) 
+function ShowGathering (id) {
+  return function (model, dispatch) {
+    const gathering = model.gatherings.find(function (gathering) {
+      return gathering.id === atob(id)
     })
     const rsvp = rsvpToGatheringSelector(gathering)(model)
-    const comments = commentsOnGatheringSelector(gathering)(model) 
-    const onSubmit = function(e) {
+    const comments = commentsOnGatheringSelector(gathering)(model)
+    const onSubmit = function (e) {
       e.preventDefault()
       const form = serialize(e.target)
       const txt = e.target.querySelector('textarea')
-      txt.value = ""
+      txt.value = ''
       dispatch(uiDiDComment({mentions: gathering.id, text: form.message}))
     }
     return ( html`
@@ -40,7 +39,7 @@ function ShowGathering(id){
           ${comments.map(function(comment) {
             return( html`
             <div class="comment"> 
-             <h4>${comment.text}</h4>
+             <h4>${comment.text} -${comment.authorName}</h4>
             </div>`
             )
           })}
@@ -48,7 +47,6 @@ function ShowGathering(id){
       </div>`
     )
   }
-
 }
 
 export default ShowGathering

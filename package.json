@@ -39,6 +39,7 @@
     "inu": "^2.3.0",
     "moment": "^2.13.0",
     "muxrpc": "^6.3.3",
+    "pull-file": "^0.5.0",
     "pull-many": "^1.0.6",
     "pull-pushable": "^2.0.0",
     "pull-serializer": "^0.3.2",

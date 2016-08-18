@@ -1,6 +1,6 @@
-var muxrpc     = require('muxrpc')
-var pull       = require('pull-stream')
-var ws         = require('pull-ws-server')
+var muxrpc = require('muxrpc')
+var pull = require('pull-stream')
+var ws = require('pull-ws-server')
 var Serializer = require('pull-serializer')
 
 module.exports = function (manifest) {
@@ -8,8 +8,8 @@ module.exports = function (manifest) {
   var ssb = muxrpc(manifest, false, serialize)()
 
   // setup rpc stream over websockets
-  var protocol = (window.location.protocol == 'https:') ? 'wss:' : 'ws:'
-  var stream = ws.connect(protocol+'//'+(window.location.hostname)+':7777', { onClose: onConnectionLost })
+  var protocol = (window.location.protocol === 'https:') ? 'wss:' : 'ws:'
+  var stream = ws.connect(protocol + '//' + (window.location.hostname) + ':7777', { onClose: onConnectionLost })
   pull(stream, ssb.createStream(), stream)
   return ssb
 }

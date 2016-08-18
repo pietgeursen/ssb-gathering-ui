@@ -10,9 +10,10 @@ module.exports = function (sbot) {
       findGatherings: sbot.gatherings.find,
       findFutureGatherings: sbot.gatherings.future,
       findCommentsOnGatherings: sbot.gatherings.commentsOnGatherings,
+      findAuthorNameOfMessage: sbot.gatherings.findAuthorNameOfMessage,
       createGathering: sbot.gatherings.create,
       myRsvps: sbot.gatherings.myRsvps,
-			publish: sbot.publish
+      publish: sbot.publish
     })
 
     // start the stream
